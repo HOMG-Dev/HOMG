@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,22 +6,22 @@ using UnityEngine.UI;
 
 public class ViewInfo
 {
-    public string PrefabName;//Ô¤ÖÆÌåÃû³Æ
-    public Transform parentTf;//¸¸ÎïÌå
-    public BaseController controller;//ËùÊô¿ØÖÆÆ÷
-    public int sortintOrder;//ÅÅĞò ´óµÄÔÚÉÏÃæ
+    public string PrefabName;//é¢„åˆ¶ä½“åç§°
+    public Transform parentTf;//çˆ¶ç‰©ä½“
+    public BaseController controller;//æ‰€å±æ§åˆ¶å™¨
+    public int sortintOrder;//æ’åº å¤§çš„åœ¨ä¸Šé¢
 }
 
 /// <summary>
-/// ÊÓÍ¼¹ÜÀíÆ÷
+/// è§†å›¾ç®¡ç†å™¨
 /// </summary>
 public class ViewManager
 {
-    public Transform canvasTf;//»­²¼
-    public Transform worldCanvasTf;//ÊÀ½ç×ø±ê»­²¼
-    Dictionary<int, IBaseView> _openedViews;//ËùÓĞ´ò¿ªµÄÊÓÍ¼
-    Dictionary<int, IBaseView> _viewCache;//ÊÓÍ¼»º´æ
-    Dictionary<int, ViewInfo> _views;//×¢²áµÄËùÓĞÊÓÍ¼ĞÅÏ¢£¬×¢²á¹ıµÄÊÓÍ¼²ÅÄÜ±»¼ÓÔØ ´ò¿ª
+    public Transform canvasTf;//ç”»å¸ƒ
+    public Transform worldCanvasTf;//ä¸–ç•Œåæ ‡ç”»å¸ƒ
+    Dictionary<int, IBaseView> _openedViews;//æ‰€æœ‰æ‰“å¼€çš„è§†å›¾
+    Dictionary<int, IBaseView> _viewCache;//è§†å›¾ç¼“å­˜
+    Dictionary<int, ViewInfo> _views;//æ³¨å†Œçš„æ‰€æœ‰è§†å›¾ä¿¡æ¯ï¼Œæ³¨å†Œè¿‡çš„è§†å›¾æ‰èƒ½è¢«åŠ è½½ æ‰“å¼€
 
     public ViewManager()
     {
@@ -32,7 +32,7 @@ public class ViewManager
         _views = new Dictionary<int, ViewInfo>();
     }
 
-    //×¢²áÊÓÍ¼ĞÅÏ¢
+    //æ³¨å†Œè§†å›¾ä¿¡æ¯
     public void Register(int viewId, ViewInfo viewInfo)
     {
         if (_views.ContainsKey(viewId) == true)
@@ -47,7 +47,7 @@ public class ViewManager
         Register((int)viewType, viewInfo);
     }
 
-    //É¾³ıÊÓÍ¼ĞÅÏ¢
+    //åˆ é™¤è§†å›¾ä¿¡æ¯
     public void Unregister(int viewId)
     {
         if (_views.ContainsKey(viewId) == true)
@@ -61,7 +61,7 @@ public class ViewManager
         }
     }
 
-    //É¾³ıÊÓÍ¼
+    //åˆ é™¤è§†å›¾
     public void RemoveView(int viewId)
     {
         _views.Remove(viewId);
@@ -69,7 +69,7 @@ public class ViewManager
         _openedViews.Remove(viewId);
     }
 
-    //É¾³ıËùÊô¿ØÖÆÆ÷µÄËùÓĞÊÓÍ¼
+    //åˆ é™¤æ‰€å±æ§åˆ¶å™¨çš„æ‰€æœ‰è§†å›¾
     public void RemoveViewByController(BaseController controller)
     {
         foreach (var item in _views)
@@ -81,13 +81,13 @@ public class ViewManager
         }
     }
 
-    //ÊÓÍ¼ÊÇ·ñ¿ªÆô
+    //è§†å›¾æ˜¯å¦å¼€å¯
     public bool IsViewOpened(int viewId)
     {
         return _openedViews.ContainsKey(viewId);
     }
 
-    //»ñÈ¡ÊÓÍ¼
+    //è·å–è§†å›¾
     public IBaseView GetView(int viewId)
     {
         if (_openedViews.ContainsKey(viewId) == true)
@@ -112,7 +112,7 @@ public class ViewManager
         return null;
     }
 
-    //Ïú»ÙÊÓÍ¼
+    //é”€æ¯è§†å›¾
     public void Destroy(int viewId)
     {
         IBaseView view = GetView(viewId);
@@ -125,7 +125,7 @@ public class ViewManager
     }
 
 
-    //¿ªÆôÊÓÍ¼
+    //å¼€å¯è§†å›¾
     public void Open(ViewType viewType, params object[] args)
     {
         Open((int)viewType, args);
@@ -146,7 +146,7 @@ public class ViewManager
 
         ViewInfo viewInfo = _views[viewId];
         IBaseView view = GetView(viewId);
-        if (view == null) //ÊÓÍ¼Î´¼ÓÔØ
+        if (view == null) //è§†å›¾æœªåŠ è½½
         {
             string type = ((ViewType)viewId).ToString();
             GameObject go = GameObject.Instantiate(Resources.Load<GameObject>($"View/{viewInfo.PrefabName}"), viewInfo.parentTf);
@@ -166,7 +166,7 @@ public class ViewManager
             }
             canvas.overrideSorting = true;
             canvas.sortingOrder = viewInfo.sortintOrder;
-            view = go.AddComponent(Type.GetType(type)) as IBaseView;//Ìí¼ÓÊÓÍ¼½Å±¾
+            view = go.AddComponent(Type.GetType(type)) as IBaseView;//æ·»åŠ è§†å›¾è„šæœ¬
             view.ViewId = viewId;
             view.Controller = viewInfo.controller;
 
@@ -185,7 +185,7 @@ public class ViewManager
         _views[viewId].controller.OpenView(view);
     }
 
-    //¹Ø±ÕÊÓÍ¼
+    //å…³é—­è§†å›¾
     public void Close(int viewId, params object[] args)
     {
         if (IsViewOpened(viewId) == false)

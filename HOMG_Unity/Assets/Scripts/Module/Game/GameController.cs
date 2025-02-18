@@ -1,16 +1,16 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// È«¾ÖÓÎÏ·¿ØÖÆÆ÷£¬´¦ÀíÓÎÏ·ÕûÌåÂß¼­
+/// å…¨å±€æ¸¸æˆæ§åˆ¶å™¨ï¼Œå¤„ç†æ¸¸æˆæ•´ä½“é€»è¾‘
 /// </summary>
 public class GameController : BaseController
 {
     public GameController() : base()
     {
 
-        //×¢²áÊÂ¼ş
+        //æ³¨å†Œäº‹ä»¶
         InitModelEvent();
         InitGlobalEvent();
     }
@@ -19,7 +19,7 @@ public class GameController : BaseController
     {
         base.Init();
 
-        //´ò¿ª¿ªÊ¼½çÃæ
+        //æ‰“å¼€å¼€å§‹ç•Œé¢
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenStartView);
     }
 }

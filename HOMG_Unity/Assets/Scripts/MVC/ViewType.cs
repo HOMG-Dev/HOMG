@@ -1,9 +1,9 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÊÓÍ¼ÀàĞÍ
+/// è§†å›¾ç±»å‹
 /// </summary>
 public enum ViewType
 {
