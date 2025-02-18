@@ -15,6 +15,8 @@ public class BaseController
         message = new Dictionary<string, System.Action<object[]>>();
     }
 
+    public virtual void Init() { }//控制器加载后的事件
+
     public virtual void OnLoadView(IBaseView view) { }//加载视图
 
     public virtual void OnDestoryView(IBaseView view) { }//销毁视图
@@ -35,7 +37,7 @@ public class BaseController
     //注册模板事件
     public void RegisterFunc(string eventName, System.Action<object[]> func)
     {
-        if (!message.ContainsKey(eventName))
+        if (message.ContainsKey(eventName) == false)
         {
             message.Add(eventName, null);
         }
@@ -45,7 +47,7 @@ public class BaseController
     //删除模板事件
     public void UnRegisterFunc(string eventName, System.Action<object[]> func)
     {
-        if (message.ContainsKey(eventName))
+        if (message.ContainsKey(eventName) == true)
         {
             message[eventName] -= func;
         }
@@ -54,21 +56,25 @@ public class BaseController
     //触发本模块事件
     public void ApplyFunc(string eventName, params object[] args)
     {
-        if (message.ContainsKey(eventName))
+        if (message.ContainsKey(eventName) == true)
         {
             message[eventName]?.Invoke(args);
         } 
         else
         {
-            Debug.LogError("事件" + eventName + "不存在");
+            Debug.LogError("Controller Function Apply Error: Event " + eventName + " doesn't exist.");
         }
     }
 
     //触发其他模块事件
+    public void ApplyControllerFunc(ControllerType type, string eventName, params object[] args)
+    {
+        GameApp.ControllerManager.ApplyFunc((int)type, eventName, args);
+    }
+
     public void ApplyControllerFunc(int controllerId, string eventName, params object[] args)
     {
-        //BaseController controller = ControllerManager.Instance.GetController(controllerId);
-        //todo..
+        GameApp.ControllerManager.ApplyFunc(controllerId, eventName, args);
     }
 
     //设置模型
@@ -88,18 +94,16 @@ public class BaseController
     }
 
     //获取其他模块的模型
-    public BaseModel GetModel(int controllerId)
+    public BaseModel GetControllerModel(int controllerId)
     {
-        //BaseController controller = ControllerManager.Instance.GetController(modelId);
-        //return controller.GetModel();
-        //todo..
-        return null;
+        return GameApp.ControllerManager.GetModel(controllerId);
     }
 
     //销毁控制器
     public virtual void Destroy()
     {
-        //todo..
+        RemoveGlobalEvent();
+        RemoveModelEvent();
     }
 
     //初始化模板事件

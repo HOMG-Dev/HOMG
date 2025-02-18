@@ -11,9 +11,9 @@ public class SoundManager
 
     private Dictionary<string, AudioClip> clips;//cache
 
-    public SoundManager() 
+    public SoundManager()
     {
-        bgmSource = GameObject.Find("GameObject").GetComponent<AudioSource>();
+        bgmSource = GameObject.Find("game").GetComponent<AudioSource>();
         bgmSource.loop = true;
         clips = new Dictionary<string, AudioClip>();
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 模型基类
 /// </summary>
-public class BaseModel 
+public class BaseModel
 {
     public BaseController controller;
 
