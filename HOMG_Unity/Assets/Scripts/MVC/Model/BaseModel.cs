@@ -1,9 +1,9 @@
-using System.Collections;
+锘縰sing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 模型基类
+/// 妯″瀷鍩虹被
 /// </summary>
 public class BaseModel
 {

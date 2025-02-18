@@ -1,14 +1,14 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ¼Ì³Ğ×ÔMono£¬¹ÒÔÚ³¡¾°ÖĞµÄ¿ÕÎïÌåÉÏ£¬ÓÃÓÚ³õÊ¼»¯Õû¸öÓÎÏ·
+/// ç»§æ‰¿è‡ªMonoï¼ŒæŒ‚åœ¨åœºæ™¯ä¸­çš„ç©ºç‰©ä½“ä¸Šï¼Œç”¨äºåˆå§‹åŒ–æ•´ä¸ªæ¸¸æˆ
 /// </summary>
 public class GameScene : MonoBehaviour
 {
 
-    public Texture2D mouseTxt;//Êó±êÌùÍ¼
+    public Texture2D mouseTxt;//é¼ æ ‡è´´å›¾
 
     float deltaTime = 0.0f;
 
@@ -21,16 +21,16 @@ public class GameScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //ÉèÖÃÊó±êÌùÍ¼
+        //è®¾ç½®é¼ æ ‡è´´å›¾
         Cursor.SetCursor(mouseTxt, Vector2.zero, CursorMode.Auto);
-        //²¥·ÅBGM
+        //æ’­æ”¾BGM
         GameApp.SoundManager.PlayBGM("axistheme");
 
 
-        //×¢²á¿ØÖÆÆ÷£¨Ä£¿é£©
+        //æ³¨å†Œæ§åˆ¶å™¨ï¼ˆæ¨¡å—ï¼‰
         RegisterModule();
 
-        //³õÊ¼»¯ËùÓĞÄ£¿é
+        //åˆå§‹åŒ–æ‰€æœ‰æ¨¡å—
         InitModules();
     }
 

@@ -1,9 +1,9 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ¿ªÊ¼ÓÎÏ·
+/// å¼€å§‹æ¸¸æˆ
 /// </summary>
 public class StartView : BaseView
 {

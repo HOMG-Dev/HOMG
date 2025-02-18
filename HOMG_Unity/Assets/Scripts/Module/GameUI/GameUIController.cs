@@ -4,15 +4,15 @@ using UnityEngine;
 
 
 /// <summary>
-/// Í¨ÓÃUI¿ØÖÆÆ÷
-/// ¿ªÊ¼ÓÎÏ· ÉèÖÃ ÌáÊ¾
+/// é€šç”¨UIæ§åˆ¶å™¨
+/// å¼€å§‹æ¸¸æˆ è®¾ç½® æç¤º
 /// </summary>
 public class GameUIController : BaseController
 {
     public GameUIController() : base()
     {
 
-        //¿ªÊ¼ÊÓÍ¼
+        //å¼€å§‹è§†å›¾
         GameApp.ViewManager.Register(ViewType.StartView, new ViewInfo()
         {
             PrefabName = "StartView",
@@ -22,7 +22,7 @@ public class GameUIController : BaseController
         } );
 
 
-        //³õÊ¼»¯ÊÂ¼ş
+        //åˆå§‹åŒ–äº‹ä»¶
         InitModelEvent();
         InitGlobalEvent();
     }

@@ -1,40 +1,40 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ¿ØÖÆÆ÷»ùÀà
+/// æ§åˆ¶å™¨åŸºç±»
 /// </summary>
 public class BaseController
 {
-    private Dictionary<string, System.Action<object[]>> message;//ÊÂ¼ş×Öµä
-    protected BaseModel model;//Ä£ĞÍÊı¾İ
+    private Dictionary<string, System.Action<object[]>> message;//äº‹ä»¶å­—å…¸
+    protected BaseModel model;//æ¨¡å‹æ•°æ®
 
     public BaseController()
     {
         message = new Dictionary<string, System.Action<object[]>>();
     }
 
-    public virtual void Init() { }//¿ØÖÆÆ÷¼ÓÔØºóµÄÊÂ¼ş
+    public virtual void Init() { }//æ§åˆ¶å™¨åŠ è½½åçš„äº‹ä»¶
 
-    public virtual void OnLoadView(IBaseView view) { }//¼ÓÔØÊÓÍ¼
+    public virtual void OnLoadView(IBaseView view) { }//åŠ è½½è§†å›¾
 
-    public virtual void OnDestoryView(IBaseView view) { }//Ïú»ÙÊÓÍ¼
+    public virtual void OnDestoryView(IBaseView view) { }//é”€æ¯è§†å›¾
 
 
-    //´ò¿ªÊÓÍ¼
+    //æ‰“å¼€è§†å›¾
     public virtual void OpenView(IBaseView view) 
     {
     
     }
 
-    //¹Ø±ÕÊÓÍ¼
+    //å…³é—­è§†å›¾
     public virtual void CloseView(IBaseView view)
     {
 
     }
 
-    //×¢²áÄ£°åÊÂ¼ş
+    //æ³¨å†Œæ¨¡æ¿äº‹ä»¶
     public void RegisterFunc(string eventName, System.Action<object[]> func)
     {
         if (message.ContainsKey(eventName) == false)
@@ -44,7 +44,7 @@ public class BaseController
         message[eventName] += func;
     }
 
-    //É¾³ıÄ£°åÊÂ¼ş
+    //åˆ é™¤æ¨¡æ¿äº‹ä»¶
     public void UnRegisterFunc(string eventName, System.Action<object[]> func)
     {
         if (message.ContainsKey(eventName) == true)
@@ -53,7 +53,7 @@ public class BaseController
         }
     }
 
-    //´¥·¢±¾Ä£¿éÊÂ¼ş
+    //è§¦å‘æœ¬æ¨¡å—äº‹ä»¶
     public void ApplyFunc(string eventName, params object[] args)
     {
         if (message.ContainsKey(eventName) == true)
@@ -66,7 +66,7 @@ public class BaseController
         }
     }
 
-    //´¥·¢ÆäËûÄ£¿éÊÂ¼ş
+    //è§¦å‘å…¶ä»–æ¨¡å—äº‹ä»¶
     public void ApplyControllerFunc(ControllerType type, string eventName, params object[] args)
     {
         GameApp.ControllerManager.ApplyFunc((int)type, eventName, args);
@@ -77,13 +77,13 @@ public class BaseController
         GameApp.ControllerManager.ApplyFunc(controllerId, eventName, args);
     }
 
-    //ÉèÖÃÄ£ĞÍ
+    //è®¾ç½®æ¨¡å‹
     public void SetModel(BaseModel model)
     {
         this.model = model;
     }
 
-    //»ñÈ¡Ä£ĞÍ
+    //è·å–æ¨¡å‹
     public BaseModel GetModel()
     {
         return model;
@@ -93,38 +93,38 @@ public class BaseController
         return (T)model;
     }
 
-    //»ñÈ¡ÆäËûÄ£¿éµÄÄ£ĞÍ
+    //è·å–å…¶ä»–æ¨¡å—çš„æ¨¡å‹
     public BaseModel GetControllerModel(int controllerId)
     {
         return GameApp.ControllerManager.GetModel(controllerId);
     }
 
-    //Ïú»Ù¿ØÖÆÆ÷
+    //é”€æ¯æ§åˆ¶å™¨
     public virtual void Destroy()
     {
         RemoveGlobalEvent();
         RemoveModelEvent();
     }
 
-    //³õÊ¼»¯Ä£°åÊÂ¼ş
+    //åˆå§‹åŒ–æ¨¡æ¿äº‹ä»¶
     public virtual void InitModelEvent()
     {
         //todo..
     }
 
-    //É¾³ıÄ£°åÊÂ¼ş
+    //åˆ é™¤æ¨¡æ¿äº‹ä»¶
     public virtual void RemoveModelEvent()
     {
         //todo..
     }
 
-    //³õÊ¼»¯È«¾ÖÊÂ¼ş
+    //åˆå§‹åŒ–å…¨å±€äº‹ä»¶
     public virtual void InitGlobalEvent()
     {
         //todo..
     }
 
-    //É¾³ıÈ«¾ÖÊÂ¼ş
+    //åˆ é™¤å…¨å±€äº‹ä»¶
     public virtual void RemoveGlobalEvent()
     {
         //todo..

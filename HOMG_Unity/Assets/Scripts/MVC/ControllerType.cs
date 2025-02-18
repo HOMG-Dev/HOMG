@@ -1,9 +1,9 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ¿ØÖÆÆ÷ÀàÐÍ
+/// æŽ§åˆ¶å™¨ç±»åž‹
 /// </summary>
 public enum ControllerType
 {

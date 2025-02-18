@@ -1,21 +1,21 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// ¿ØÖÆÆ÷¹ÜÀíÆ÷
+/// æ§åˆ¶å™¨ç®¡ç†å™¨
 /// </summary>
 public class ControllerManager
 {
-    private Dictionary<int, BaseController> _modules;//ËùÓĞµÄ¿ØÖÆÆ÷
+    private Dictionary<int, BaseController> _modules;//æ‰€æœ‰çš„æ§åˆ¶å™¨
 
     public ControllerManager()
     {
         _modules = new Dictionary<int, BaseController>();
     }
 
-    //×¢²á¿ØÖÆÆ÷
+    //æ³¨å†Œæ§åˆ¶å™¨
     public void Register(ControllerType type, BaseController controller)
     {
         Register((int)type, controller);
@@ -31,7 +31,7 @@ public class ControllerManager
         _modules.Add(controllerId, controller);
     }
 
-    //É¾³ı¿ØÖÆÆ÷
+    //åˆ é™¤æ§åˆ¶å™¨
     public void Unregister(int controllerId)
     {
         if (_modules.ContainsKey(controllerId) == false)
@@ -42,14 +42,14 @@ public class ControllerManager
         _modules.Remove(controllerId);
     }
 
-    //Çå¿ÕËùÓĞ¿ØÖÆÆ÷
+    //æ¸…ç©ºæ‰€æœ‰æ§åˆ¶å™¨
     public void Clear()
     {
         _modules.Clear();
     }
 
 
-    //Çå¿ÕËùÓĞ¿ØÖÆÆ÷²¢ÊÍ·Å×ÊÔ´
+    //æ¸…ç©ºæ‰€æœ‰æ§åˆ¶å™¨å¹¶é‡Šæ”¾èµ„æº
     public void ClearAllModules()
     {
         List<int> keys = _modules.Keys.ToList();
@@ -60,7 +60,7 @@ public class ControllerManager
         }
     }
 
-    //Ö´ĞĞËùÓĞ³õÊ¼»¯ºóµ÷ÓÃ
+    //æ‰§è¡Œæ‰€æœ‰åˆå§‹åŒ–åè°ƒç”¨
     public void InitAllModules()
     {
         foreach (var module in _modules)
@@ -70,7 +70,7 @@ public class ControllerManager
     }
 
 
-    //´¥·¢ÊÂ¼ş
+    //è§¦å‘äº‹ä»¶
     public void ApplyFunc(int controllerId, string eventName, params object[] args)
     {
         if (_modules.ContainsKey(controllerId) == true)
@@ -83,7 +83,7 @@ public class ControllerManager
         }
     }
 
-    //»ñÈ¡¿ØÖÆÆ÷µÄÄ£ĞÍ
+    //è·å–æ§åˆ¶å™¨çš„æ¨¡å‹
     public BaseModel GetModel(int controllerId)
     {
         if (_modules.ContainsKey(controllerId) == true)

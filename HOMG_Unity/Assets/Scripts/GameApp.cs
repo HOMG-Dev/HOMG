@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Í³Ò»¶¨Òå ¹ÜÀíÆ÷ £¬ÔÚ´Ë´¦³õÊ¼»¯ËùÓĞ¹ÜÀíÆ÷
+/// ç»Ÿä¸€å®šä¹‰ ç®¡ç†å™¨ ï¼Œåœ¨æ­¤å¤„åˆå§‹åŒ–æ‰€æœ‰ç®¡ç†å™¨
 /// </summary>
 public class GameApp : Singleton<GameApp>
 {
