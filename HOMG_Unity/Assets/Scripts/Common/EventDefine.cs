@@ -4,6 +4,9 @@ using UnityEngine;
 
 public static class EventDefine
 {
-    //¿ØÖÆÆ÷ÊÂ¼þ
+    //æŽ§åˆ¶å™¨äº‹ä»¶
     public static readonly string OpenStartView = "OpenStartView";
+    public static readonly string CloseStartView = "CloseStartView";
+    public static readonly string OpenMapView = "OpenMapView";
+    public static readonly string CloseMapView = "CloseMapView";
 }
