@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +8,7 @@ public class BaseView : MonoBehaviour, IBaseView
     public int ViewId { get; set; }
     public BaseController Controller { get; set; }
     protected Canvas _canvas;
-    protected Dictionary<string, GameObject> m_cache_gos = new Dictionary<string, GameObject>();//»º´æµÄGameObject
+    protected Dictionary<string, GameObject> m_cache_gos = new Dictionary<string, GameObject>();//ç¼“å­˜çš„GameObject
     private bool _isInit = false;
 
     void Awake()

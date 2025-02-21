@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -186,6 +186,10 @@ public class ViewManager
     }
 
     //关闭视图
+    public void Close(ViewType viewType, params object[] args)
+    {
+        Close((int)viewType, args);
+    }
     public void Close(int viewId, params object[] args)
     {
         if (IsViewOpened(viewId) == false)

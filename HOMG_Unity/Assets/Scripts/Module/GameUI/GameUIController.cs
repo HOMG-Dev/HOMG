@@ -21,6 +21,15 @@ public class GameUIController : BaseController
             sortintOrder = 0,
         } );
 
+        //测试地图视图
+        GameApp.ViewManager.Register(ViewType.MapView, new ViewInfo()
+        {
+            PrefabName = "MapView",
+            parentTf = GameApp.ViewManager.canvasTf,
+            controller = this,
+            sortintOrder = 1,
+        });
+
 
         //初始化事件
         InitModelEvent();
@@ -31,6 +40,9 @@ public class GameUIController : BaseController
     {
         base.InitModelEvent();
         RegisterFunc(EventDefine.OpenStartView, OpenStartView);
+        RegisterFunc(EventDefine.CloseStartView, CloseStartView);
+        RegisterFunc(EventDefine.OpenMapView, OpenMapView);
+        RegisterFunc(EventDefine.CloseMapView, CloseMapView);
     }
 
     public override void InitGlobalEvent()
@@ -41,5 +53,19 @@ public class GameUIController : BaseController
     private void OpenStartView(System.Object[] args)
     {
         GameApp.ViewManager.Open(ViewType.StartView, args);
+    }
+    private void CloseStartView(System.Object[] args)
+    {
+        GameApp.ViewManager.Close(ViewType.StartView, args);
+    }
+
+    private void OpenMapView(System.Object[] args)
+    {
+        GameApp.ViewManager.Open(ViewType.MapView, args);
+    }
+
+    private void CloseMapView(System.Object[] args)
+    {
+        GameApp.ViewManager.Close(ViewType.MapView, args);
     }
 }

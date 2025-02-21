@@ -1,33 +1,33 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÊÓÍ¼½Ó¿Ú
+/// è§†å›¾æ¥å£
 /// </summary>
 public interface IBaseView
 {
-    bool IsInit();//ÊÇ·ñ³õÊ¼»¯
-    bool IsShow();//ÊÇ·ñÏÔÊ¾
+    bool IsInit();//æ˜¯å¦åˆå§‹åŒ–
+    bool IsShow();//æ˜¯å¦æ˜¾ç¤º
 
-    void InitUI();//³õÊ¼»¯ÊÓÍ¼
+    void InitUI();//åˆå§‹åŒ–è§†å›¾
 
-    void InitData();//³õÊ¼»¯Êı¾İ
+    void InitData();//åˆå§‹åŒ–æ•°æ®
 
-    void Open(params object[] args);//´ò¿ªÊÓÍ¼
+    void Open(params object[] args);//æ‰“å¼€è§†å›¾
 
-    void Close(params object[] args);//¹Ø±ÕÊÓÍ¼
+    void Close(params object[] args);//å…³é—­è§†å›¾
 
-    void DestroyView();//Ïú»ÙÊÓÍ¼
+    void DestroyView();//é”€æ¯è§†å›¾
 
-    void ApplyFunc(string eventName, params object[] args);//´¥·¢×ÔÉíÊÂ¼ş
+    void ApplyFunc(string eventName, params object[] args);//è§¦å‘è‡ªèº«äº‹ä»¶
 
-    void ApplyControllerFunc(int controllerId, string eventName, params object[] args);//´¥·¢¿ØÖÆÆ÷ÊÂ¼ş
+    void ApplyControllerFunc(int controllerId, string eventName, params object[] args);//è§¦å‘æ§åˆ¶å™¨äº‹ä»¶
 
-    void SetVisable(bool isVisable);//ÉèÖÃÏÔÊ¾Òş²Ø
+    void SetVisable(bool isVisable);//è®¾ç½®æ˜¾ç¤ºéšè—
 
-    int ViewId { get; set ; }//ÊÓÍ¼ID
+    int ViewId { get; set ; }//è§†å›¾ID
 
-    BaseController Controller { get ; set ; }//ÊÓÍ¼ËùÊô¿ØÖÆÆ÷
+    BaseController Controller { get ; set ; }//è§†å›¾æ‰€å±æ§åˆ¶å™¨
 
 }
