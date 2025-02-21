@@ -34,12 +34,17 @@ public class StartView : BaseView
 
     private void onSetBtn()
     {
-
+        ApplyFunc(EventDefine.OpenSettingView);
     }
 
     private void onQuitBtn()
     {
-
+        //退出游戏
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 
 }

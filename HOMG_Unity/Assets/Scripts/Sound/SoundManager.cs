@@ -3,13 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÉùÒô¹ÜÀíÆ÷
+/// å£°éŸ³ç®¡ç†å™¨
 /// </summary>
 public class SoundManager
 {
-    private AudioSource bgmSource;//±³¾°ÒôÀÖ
+    private AudioSource bgmSource;//èƒŒæ™¯éŸ³ä¹
 
     private Dictionary<string, AudioClip> clips;//cache
+
+    private bool isOpenSound = true;//æ˜¯å¦å¼€å¯å£°éŸ³
+
+    public bool IsOpenSound
+    {
+        get { return isOpenSound; }
+        set
+        {
+            isOpenSound = value;
+            if (isOpenSound == false)
+            {
+                bgmSource.Stop();
+            }
+            else
+            {
+                bgmSource.Play();
+            }
+        }
+    }
+
+    private float bgmVolume = 1;//éŸ³é‡
+
+    public float BgmVolume
+    {
+        get { return bgmVolume; }
+        set
+        {
+            bgmVolume = value;
+            bgmSource.volume = bgmVolume;
+        }
+    }
+
+    private float effectVolume = 1;//éŸ³æ•ˆéŸ³é‡
+    public float EffectVolume
+    {
+        get { return effectVolume; }
+        set
+        {
+            effectVolume = value;
+            //todo..
+        }
+    }
 
     public SoundManager()
     {
@@ -20,12 +62,14 @@ public class SoundManager
 
     public void PlayBGM(AudioClip clip)
     {
+        if (isOpenSound == false) return;
         bgmSource.clip = clip;
         bgmSource.Play();
     }
 
     public void PlayBGM(string clipName)
     {
+        if (isOpenSound == false) return;
         if (clips.ContainsKey(clipName) == false)
         {
             AudioClip clip = Resources.Load<AudioClip>($"Sounds/{clipName}");

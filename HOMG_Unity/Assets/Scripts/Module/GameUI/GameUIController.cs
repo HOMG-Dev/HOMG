@@ -21,6 +21,16 @@ public class GameUIController : BaseController
             sortintOrder = 0,
         } );
 
+        //设置视图
+        GameApp.ViewManager.Register(ViewType.SettingView, new ViewInfo()
+        {
+            PrefabName = "SettingView",
+            parentTf = GameApp.ViewManager.canvasTf,
+            controller = this,
+            sortintOrder = 999,
+        });
+
+
         //测试地图视图
         GameApp.ViewManager.Register(ViewType.MapView, new ViewInfo()
         {
@@ -41,6 +51,10 @@ public class GameUIController : BaseController
         base.InitModelEvent();
         RegisterFunc(EventDefine.OpenStartView, OpenStartView);
         RegisterFunc(EventDefine.CloseStartView, CloseStartView);
+
+        RegisterFunc(EventDefine.OpenSettingView, OpenSettingView);
+        RegisterFunc(EventDefine.CloseSettingView, CloseSettingView);
+
         RegisterFunc(EventDefine.OpenMapView, OpenMapView);
         RegisterFunc(EventDefine.CloseMapView, CloseMapView);
     }
@@ -58,6 +72,18 @@ public class GameUIController : BaseController
     {
         GameApp.ViewManager.Close(ViewType.StartView, args);
     }
+
+
+    private void OpenSettingView(System.Object[] args)
+    {
+        GameApp.ViewManager.Open(ViewType.SettingView, args);
+    }
+    private void CloseSettingView(System.Object[] args)
+    {
+        GameApp.ViewManager.Close(ViewType.SettingView, args);
+    }
+
+
 
     private void OpenMapView(System.Object[] args)
     {
