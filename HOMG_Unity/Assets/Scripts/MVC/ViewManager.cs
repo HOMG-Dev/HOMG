@@ -102,6 +102,10 @@ public class ViewManager
         return null;
     }
 
+    public T GetView<T>(ViewType viewId) where T : class, IBaseView
+    {
+        return GetView<T>((int)viewId);
+    }
     public T GetView<T>(int viewId) where T : class, IBaseView
     {
         IBaseView view = GetView(viewId);

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,10 +12,21 @@ public class GameScene : MonoBehaviour
 
     float deltaTime = 0.0f;
 
+    private bool isLoaded = false;
+
 
     private void Awake()
     {
-        GameApp.Instance.Init();
+        if (isLoaded == true)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+            isLoaded = true;
+            GameApp.Instance.Init();
+        }
     }
 
     // Start is called before the first frame update
@@ -38,6 +49,7 @@ public class GameScene : MonoBehaviour
     {
         GameApp.ControllerManager.Register(ControllerType.GameUI, new GameUIController());
         GameApp.ControllerManager.Register(ControllerType.Game, new GameController());
+        GameApp.ControllerManager.Register(ControllerType.Loading, new LoadingController());
     }
 
     void InitModules()

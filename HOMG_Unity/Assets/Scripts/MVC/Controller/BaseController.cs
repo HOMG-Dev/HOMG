@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -81,6 +81,7 @@ public class BaseController
     public void SetModel(BaseModel model)
     {
         this.model = model;
+        this.model.controller = this;
     }
 
     //获取模型

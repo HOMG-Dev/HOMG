@@ -28,8 +28,12 @@ public class StartView : BaseView
     //按钮回调函数
     private void onStartBtn()
     {
-        ApplyFunc(EventDefine.OpenMapView);
+        //ApplyFunc(EventDefine.OpenMapView);
         ApplyFunc(EventDefine.CloseStartView);
+        LoadingModel loadingModel = new LoadingModel();
+        loadingModel.SceneName = "Map";
+        Controller.ApplyControllerFunc(ControllerType.Loading, EventDefine.LoadingScene, loadingModel);
+
     }
 
     private void onSetBtn()
