@@ -13,4 +13,8 @@ public static class EventDefine
 
     public static readonly string OpenMapView = "OpenMapView";
     public static readonly string CloseMapView = "CloseMapView";
+
+    public static readonly string LoadingScene = "LoadingScene";
+
+    public static readonly string CameraMove = "CameraMove";
 }

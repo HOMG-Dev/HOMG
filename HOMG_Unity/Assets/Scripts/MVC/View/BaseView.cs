@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +32,10 @@ public class BaseView : MonoBehaviour, IBaseView
 
     }
 
+    public void ApplyControllerFunc(ControllerType controllerId, string eventName, params object[] args)
+    {
+        this.Controller.ApplyControllerFunc((int)controllerId, eventName, args);
+    }
 
     public void ApplyControllerFunc(int controllerId, string eventName, params object[] args)
     {

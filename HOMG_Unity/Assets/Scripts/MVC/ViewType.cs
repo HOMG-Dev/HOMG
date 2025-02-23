@@ -10,4 +10,5 @@ public enum ViewType
     StartView,
     SettingView,
     MapView,
+    LoadingView,
 }
