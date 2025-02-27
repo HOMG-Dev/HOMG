@@ -11,4 +11,5 @@ public enum ViewType
     SettingView,
     MapView,
     LoadingView,
+    GameUIView,
 }

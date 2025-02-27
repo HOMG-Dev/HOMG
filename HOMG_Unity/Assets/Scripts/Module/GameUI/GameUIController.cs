@@ -30,6 +30,15 @@ public class GameUIController : BaseController
             sortintOrder = 999,
         });
 
+        //对局内UI视图
+        GameApp.ViewManager.Register(ViewType.GameUIView, new ViewInfo()
+        {
+            PrefabName = "GameUIView",
+            parentTf = GameApp.ViewManager.canvasTf,
+            controller = this,
+            sortintOrder = 888,
+        });
+
 
         //初始化事件
         InitModelEvent();
@@ -65,6 +74,7 @@ public class GameUIController : BaseController
     private void OpenSettingView(System.Object[] args)
     {
         GameApp.ViewManager.Open(ViewType.SettingView, args);
+        //GameApp.ViewManager.Open(ViewType.GameUIView, args);
     }
     private void CloseSettingView(System.Object[] args)
     {

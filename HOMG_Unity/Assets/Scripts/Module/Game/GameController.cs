@@ -28,6 +28,7 @@ public class GameController : BaseController
             sortintOrder = 1,
         });
 
+
         //打开开始界面
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenStartView);
     }
@@ -39,6 +40,11 @@ public class GameController : BaseController
         //打开地图界面
         RegisterFunc(EventDefine.OpenMapView, OpenMapView);
         RegisterFunc(EventDefine.CloseMapView, CloseMapView);
+
+        //打开UI
+        RegisterFunc(EventDefine.OpenGameUIView, OpenGameUIView);
+        RegisterFunc(EventDefine.CloseGameUIView, CloseGameUIView);
+
 
         //摄像头移动
         RegisterFunc(EventDefine.CameraMove, CameraMove);
@@ -52,6 +58,16 @@ public class GameController : BaseController
     private void CloseMapView(System.Object[] args)
     {
         GameApp.ViewManager.Close(ViewType.MapView, args);
+    }
+
+    private void OpenGameUIView(System.Object[] args)
+    {
+        GameApp.ViewManager.Open(ViewType.GameUIView, args);
+    }
+
+    private void CloseGameUIView(System.Object[] args)
+    {
+        GameApp.ViewManager.Close(ViewType.GameUIView, args);
     }
 
     private void CameraMove(System.Object[] args)
