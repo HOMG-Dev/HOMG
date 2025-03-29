@@ -40,6 +40,7 @@ public class GameUIController : BaseController
         });
 
 
+
         //初始化事件
         InitModelEvent();
         InitGlobalEvent();
