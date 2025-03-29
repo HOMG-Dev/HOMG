@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,6 +15,30 @@ public class MapView : BaseView
     private List<MyCell> _targetCells;//准备要高亮的cell
     private List<MyCell> _selectedCells;//选中的cell
 
+
+
+    public override void Close(params object[] args)
+    {
+        base.Close(args);
+        _highlightingCells = null;
+        _targetCells = null;
+        _selectedCells = null;
+
+    }
+
+    public override void Pause(params object[] args)
+    {
+        base.Pause(args);
+        this.enabled = false;
+        Debug.Log("Pause");
+    }
+
+    public override void Resume(params object[] args)
+    {
+        base.Resume(args);
+        this.enabled = true;
+        Debug.Log("Resume");
+    }
 
     public override void InitData()
     {
@@ -71,12 +96,7 @@ public class MapView : BaseView
 
     private void onQuitBtn()
     {
-        //退出地图
-        ApplyFunc(EventDefine.CloseMapView);
-        ApplyFunc(EventDefine.CloseGameUIView);
-        //关闭地图 或者 禁用脚本的update
-        //todo..
-        ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenStartView);
+        ApplyFunc(EventDefine.QuitGame);
     }
 
     private void Update()
@@ -102,6 +122,10 @@ public class MapView : BaseView
         if (Input.GetKey(KeyCode.D))
         {
             ApplyFunc(EventDefine.CameraMove, Vector3.right * Time.deltaTime * ConstantDefine.CameraMoveSpeed);
+        }
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            ApplyFunc(EventDefine.OpenInGameSettingView);
         }
     }
 

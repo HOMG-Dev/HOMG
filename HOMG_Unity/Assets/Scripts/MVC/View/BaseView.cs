@@ -82,6 +82,14 @@ public class BaseView : MonoBehaviour, IBaseView
     {
 
     }
+    public virtual void Pause(params object[] args)
+    {
+
+    }
+
+    public virtual void Resume(params object[] args)
+    {
+    }
 
     public void SetVisable(bool isVisable)
     {

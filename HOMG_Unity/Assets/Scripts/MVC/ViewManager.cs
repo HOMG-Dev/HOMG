@@ -189,6 +189,44 @@ public class ViewManager
         _views[viewId].controller.OpenView(view);
     }
 
+    //暂停视图
+    public void Pause(ViewType viewType, params object[] args)
+    {
+        Pause((int)viewType, args);
+    }
+
+    public void Pause(int viewId, params object[] args)
+    {
+        if (IsViewOpened(viewId) == false)
+        {
+            return;
+        }
+        IBaseView view = GetView(viewId);
+        if (view != null)
+        {
+            view.Pause(args);
+        }
+    }
+
+    //恢复视图
+    public void Resume(ViewType viewType, params object[] args)
+    {
+        Resume((int)viewType, args);
+    }
+
+    public void Resume(int viewId, params object[] args)
+    {
+        if (IsViewOpened(viewId) == false)
+        {
+            return;
+        }
+        IBaseView view = GetView(viewId);
+        if (view != null)
+        {
+            view.Resume(args);
+        }
+    }
+
     //关闭视图
     public void Close(ViewType viewType, params object[] args)
     {

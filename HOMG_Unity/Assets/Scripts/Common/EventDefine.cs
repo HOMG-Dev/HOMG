@@ -17,7 +17,12 @@ public static class EventDefine
     public static readonly string OpenGameUIView = "OpenGameUIView";
     public static readonly string CloseGameUIView = "CloseGameUIView";
 
+    public static readonly string OpenInGameSettingView = "OpenInGameSettingView";
+    public static readonly string CloseInGameSettingView = "CloseInGameSettingView";
+
     public static readonly string LoadingScene = "LoadingScene";
 
     public static readonly string CameraMove = "CameraMove";
+
+    public static readonly string QuitGame = "QuitGame";
 }

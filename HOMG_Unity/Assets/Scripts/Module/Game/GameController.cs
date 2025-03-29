@@ -28,6 +28,16 @@ public class GameController : BaseController
             sortintOrder = 1,
         });
 
+        
+        //对局内设置视图
+        GameApp.ViewManager.Register(ViewType.InGameSettingView, new ViewInfo()
+        {
+            PrefabName = "InGameSettingView",
+            parentTf = GameApp.ViewManager.canvasTf,
+            controller = this,
+            sortintOrder = 999,
+        });
+
 
         //打开开始界面
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenStartView);
@@ -48,6 +58,13 @@ public class GameController : BaseController
 
         //摄像头移动
         RegisterFunc(EventDefine.CameraMove, CameraMove);
+
+        //游戏设置界面
+        RegisterFunc(EventDefine.OpenInGameSettingView, OpenInGameSettingView);
+        RegisterFunc(EventDefine.CloseInGameSettingView, CloseInGameSettingView);
+
+        //退出对局
+        RegisterFunc(EventDefine.QuitGame, QuitGame);
     }
 
     private void OpenMapView(System.Object[] args)
@@ -75,4 +92,27 @@ public class GameController : BaseController
         Vector3 direction = (Vector3)args[0];
         GameObject.Find("Map Camera").transform.position += direction;
     }
+
+    private void OpenInGameSettingView(System.Object[] args)
+    {
+        GameApp.ViewManager.Open(ViewType.InGameSettingView, args);
+        GameApp.ViewManager.Pause(ViewType.MapView);
+    }
+
+    private void CloseInGameSettingView(System.Object[] args)
+    {
+        GameApp.ViewManager.Close(ViewType.InGameSettingView, args);
+        GameApp.ViewManager.Resume(ViewType.MapView);
+    }
+
+    private void QuitGame(System.Object[] args)
+    {
+        //退出地图
+        ApplyFunc(EventDefine.CloseMapView);
+        ApplyFunc(EventDefine.CloseGameUIView);
+        //关闭地图 或者 禁用脚本的update
+        //todo..
+        ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenStartView);
+    }
+
 }

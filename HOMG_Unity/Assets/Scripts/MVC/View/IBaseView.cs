@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +15,10 @@ public interface IBaseView
     void InitData();//初始化数据
 
     void Open(params object[] args);//打开视图
+
+    void Pause(params object[] args);//暂停视图
+
+    void Resume(params object[] args);//恢复视图
 
     void Close(params object[] args);//关闭视图
 
