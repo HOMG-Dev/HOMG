@@ -31,6 +31,7 @@ public class SettingView : BaseView
     private void onIsOpenSound(bool value)
     {
         GameApp.SoundManager.IsOpenSound = !value;
+        Debug.Log("onIsOpenSound:" + GameApp.SoundManager.IsOpenSound);
     }
 
     private void onSoundCount(float value)
@@ -47,7 +48,7 @@ public class SettingView : BaseView
     // Ensure InitData is public to match the base class
     public override void InitData()
     {
-        Find<Toggle>("bg/IsOpenSound").isOn = GameApp.SoundManager.IsOpenSound;
+        Find<Toggle>("bg/IsOpenSound").isOn = !GameApp.SoundManager.IsOpenSound;
         Find<Slider>("bg/soundCount").value = GameApp.SoundManager.BgmVolume;
         Find<Slider>("bg/effectCount").value = GameApp.SoundManager.EffectVolume;
     }
