@@ -74,7 +74,7 @@ public class MapView : BaseView
                 float delta = (j % 2 == 0) ? 75f/2f : 0;
                 cell.transform.localPosition = new Vector3(i * (ConstantDefine.CellLength) + delta, 25, j * (ConstantDefine.CellWidth/2));
                 cell.name = i + "_" + j;
-                cell.GetComponentInChildren<MyCell>().Lowlight();
+                cell.GetComponent<MyCell>().Lowlight();
                 //mc.Lowlight();
                 //cell.GetComponent<MyCell>().Init(i, j);
             }
