@@ -11,9 +11,9 @@ using UnityEngine.UI;
 /// </summary>
 public class MapView : BaseView
 {
-    private List<MyCell> _highlightingCells;//正在高亮的cell
-    private List<MyCell> _targetCells;//准备要高亮的cell
-    private List<MyCell> _selectedCells;//选中的cell
+    private List<CellBehavior> _highlightingCells;//正在高亮的cell
+    private List<CellBehavior> _targetCells;//准备要高亮的cell
+    private List<CellBehavior> _selectedCells;//选中的cell
 
 
 
@@ -43,9 +43,9 @@ public class MapView : BaseView
     public override void InitData()
     {
         base.InitData();
-        _highlightingCells = new List<MyCell>();
-        _targetCells = new List<MyCell>();
-        _selectedCells = new List<MyCell>();
+        _highlightingCells = new List<CellBehavior>();
+        _targetCells = new List<CellBehavior>();
+        _selectedCells = new List<CellBehavior>();
         CreateCells();
     }
 
@@ -74,9 +74,9 @@ public class MapView : BaseView
                 float delta = (j % 2 == 0) ? 75f/2f : 0;
                 cell.transform.localPosition = new Vector3(i * (ConstantDefine.CellLength) + delta, 25, j * (ConstantDefine.CellWidth/2));
                 cell.name = i + "_" + j;
-                cell.GetComponent<MyCell>().Lowlight();
+                cell.GetComponent<CellBehavior>().Lowlight();
                 //mc.Lowlight();
-                //cell.GetComponent<MyCell>().Init(i, j);
+                //cell.GetComponent<CellBehavior>().Init(i, j);
             }
         }
     }
@@ -147,7 +147,7 @@ public class MapView : BaseView
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            MyCell cell = hit.transform.GetComponent<MyCell>();
+            CellBehavior cell = hit.transform.GetComponent<CellBehavior>();
             if (cell != null)
             {
                 _targetCells.Add(cell);
@@ -176,7 +176,7 @@ public class MapView : BaseView
         }
     }
 
-    private void OnClick(MyCell myCell)
+    private void OnClick(CellBehavior myCell)
     {
         if (Input.GetMouseButtonDown(0))
         {
