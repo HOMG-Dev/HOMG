@@ -25,4 +25,7 @@ public static class EventDefine
     public static readonly string CameraMove = "CameraMove";
 
     public static readonly string QuitGame = "QuitGame";
+
+    public static readonly string OpenAvatarView = "OpenAvatarView";
+    public static readonly string CloseAvatarView = "CloseAvatarView";
 }
