@@ -28,7 +28,7 @@ public class GameController : BaseController
             sortintOrder = 1,
         });
 
-        
+
         //对局内设置视图
         GameApp.ViewManager.Register(ViewType.InGameSettingView, new ViewInfo()
         {
@@ -110,6 +110,7 @@ public class GameController : BaseController
         //退出地图
         ApplyFunc(EventDefine.CloseMapView);
         ApplyFunc(EventDefine.CloseGameUIView);
+        ApplyFunc(EventDefine.CloseAvatarView);
         //关闭地图 或者 禁用脚本的update
         //todo..
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenStartView);
