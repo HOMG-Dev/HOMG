@@ -39,7 +39,14 @@ public class GameUIController : BaseController
             sortintOrder = 888,
         });
 
-
+        //头像视图
+        GameApp.ViewManager.Register(ViewType.AvatarView, new ViewInfo()
+        {
+            PrefabName = "AvatarView",
+            parentTf = GameApp.ViewManager.canvasTf,
+            controller = this,
+            sortintOrder = 777,
+        });
 
         //初始化事件
         InitModelEvent();
@@ -55,11 +62,25 @@ public class GameUIController : BaseController
         RegisterFunc(EventDefine.OpenSettingView, OpenSettingView);
         RegisterFunc(EventDefine.CloseSettingView, CloseSettingView);
 
+        //在这里注册新的函数
+        RegisterFunc(EventDefine.OpenAvatarView, OpenAvatarView);
+        RegisterFunc(EventDefine.CloseAvatarView, CloseAvatarView);
+
     }
 
     public override void InitGlobalEvent()
     {
         base.InitGlobalEvent();
+    }
+
+    private void OpenAvatarView(System.Object[] args)
+    {
+        GameApp.ViewManager.Open(ViewType.AvatarView, args);
+    }
+
+    private void CloseAvatarView(System.Object[] args)
+    {
+        GameApp.ViewManager.Close(ViewType.AvatarView, args);
     }
 
     private void OpenStartView(System.Object[] args)

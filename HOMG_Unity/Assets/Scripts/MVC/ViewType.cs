@@ -13,4 +13,5 @@ public enum ViewType
     LoadingView,
     GameUIView,
     InGameSettingView,
+    AvatarView,
 }
