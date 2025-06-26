@@ -51,11 +51,6 @@ public class GameController : BaseController
         RegisterFunc(EventDefine.OpenMapView, OpenMapView);
         RegisterFunc(EventDefine.CloseMapView, CloseMapView);
 
-        //打开UI
-        RegisterFunc(EventDefine.OpenGameUIView, OpenGameUIView);
-        RegisterFunc(EventDefine.CloseGameUIView, CloseGameUIView);
-
-
         //摄像头移动
         RegisterFunc(EventDefine.CameraMove, CameraMove);
 
@@ -75,16 +70,6 @@ public class GameController : BaseController
     private void CloseMapView(System.Object[] args)
     {
         GameApp.ViewManager.Close(ViewType.MapView, args);
-    }
-
-    private void OpenGameUIView(System.Object[] args)
-    {
-        GameApp.ViewManager.Open(ViewType.GameUIView, args);
-    }
-
-    private void CloseGameUIView(System.Object[] args)
-    {
-        GameApp.ViewManager.Close(ViewType.GameUIView, args);
     }
 
     private void CameraMove(System.Object[] args)
@@ -109,11 +94,12 @@ public class GameController : BaseController
     {
         //退出地图
         ApplyFunc(EventDefine.CloseMapView);
-        ApplyFunc(EventDefine.CloseGameUIView);
-        ApplyFunc(EventDefine.CloseAvatarView);
+
         //关闭地图 或者 禁用脚本的update
         //todo..
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenStartView);
+        ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseAvatarView);
+        ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseGameUIView);
     }
 
 }

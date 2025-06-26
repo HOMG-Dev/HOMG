@@ -48,6 +48,15 @@ public class GameUIController : BaseController
             sortintOrder = 777,
         });
 
+        //地形视图
+        GameApp.ViewManager.Register(ViewType.CellLandformView, new ViewInfo()
+        {
+            PrefabName = "CellLandformView",
+            parentTf = GameApp.ViewManager.canvasTf,
+            controller = this,
+            sortintOrder = 777,
+        });
+
         //初始化事件
         InitModelEvent();
         InitGlobalEvent();
@@ -59,6 +68,9 @@ public class GameUIController : BaseController
         RegisterFunc(EventDefine.OpenStartView, OpenStartView);
         RegisterFunc(EventDefine.CloseStartView, CloseStartView);
 
+        RegisterFunc(EventDefine.OpenGameUIView, OpenGameUIView);
+        RegisterFunc(EventDefine.CloseGameUIView, CloseGameUIView);
+
         RegisterFunc(EventDefine.OpenSettingView, OpenSettingView);
         RegisterFunc(EventDefine.CloseSettingView, CloseSettingView);
 
@@ -66,6 +78,8 @@ public class GameUIController : BaseController
         RegisterFunc(EventDefine.OpenAvatarView, OpenAvatarView);
         RegisterFunc(EventDefine.CloseAvatarView, CloseAvatarView);
 
+        RegisterFunc(EventDefine.CloseCellLandformView, CloseCellLandformView);
+        RegisterFunc(EventDefine.OpenCellLandformView, OpenCellLandformView);
     }
 
     public override void InitGlobalEvent()
@@ -103,4 +117,23 @@ public class GameUIController : BaseController
         GameApp.ViewManager.Close(ViewType.SettingView, args);
     }
 
+    private void OpenGameUIView(System.Object[] args)
+    {
+        GameApp.ViewManager.Open(ViewType.GameUIView, args);
+    }
+
+    private void CloseGameUIView(System.Object[] args)
+    {
+        GameApp.ViewManager.Close(ViewType.GameUIView, args);
+    }
+
+    private void OpenCellLandformView(System.Object[] args)
+    {
+        GameApp.ViewManager.Open(ViewType.CellLandformView, args);
+    }
+
+    private void CloseCellLandformView(System.Object[] args)
+    {
+        GameApp.ViewManager.Close(ViewType.CellLandformView, args);
+    }
 }

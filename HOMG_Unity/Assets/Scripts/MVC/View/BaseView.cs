@@ -94,6 +94,7 @@ public class BaseView : MonoBehaviour, IBaseView
     public void SetVisable(bool isVisable)
     {
         this._canvas.enabled = isVisable;
+        this.gameObject.SetActive(isVisable);
     }
 
     public GameObject Find(string res)

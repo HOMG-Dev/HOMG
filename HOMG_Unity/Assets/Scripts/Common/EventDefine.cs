@@ -30,4 +30,7 @@ public static class EventDefine
 
     public static readonly string OpenAvatarView = "OpenAvatarView";
     public static readonly string CloseAvatarView = "CloseAvatarView";
+
+    public static readonly string OpenCellLandformView = "OpenCellLandformView";
+    public static readonly string CloseCellLandformView = "CloseCellLandformView";
 }
