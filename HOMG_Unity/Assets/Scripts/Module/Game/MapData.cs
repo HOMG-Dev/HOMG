@@ -107,6 +107,90 @@ public static class LandformType
     }
 }
 
+public class Landform
+{
+    private LandformType.Type _landformType;
+
+    public Landform(LandformType.Type landformType)
+    {
+        _landformType = landformType;
+    }
+
+    public LandformType.Type Type()
+    {
+        return _landformType;
+    }
+
+    public int AttackingATKCorrection()
+    {
+        return LandformType.GetLandformTypeCorrection(Type()).attackingATKCorrection;
+    }
+
+    public int AttackingDEFCorrection()
+    {
+        return LandformType.GetLandformTypeCorrection(Type()).attackingDEFCorrection;
+    }
+
+    public int DefendingATKCorrection()
+    {
+        return LandformType.GetLandformTypeCorrection(Type()).defendingATKCorrection;
+    }
+
+    public int DefendingDEFCorrection()
+    {
+        return LandformType.GetLandformTypeCorrection(Type()).defendingDEFCorrection;
+    }
+}
+
+public class Unit
+{
+    private UnitType.Type _type;
+    private int _ID;
+    private static int _IDCounter = 0;
+
+    public UnitType.Type Type()
+    {
+        return _type;
+    }
+
+    private int NewID()
+    {
+        return ++_IDCounter;
+    }
+
+    public int ID()
+    {
+        return _ID;
+    }
+
+    public static int IDCounter()
+    {
+        return _IDCounter;
+    }
+
+    public Unit()
+    {
+        _ID = NewID();
+        _type = UnitType.Type.Undefined;
+    }
+
+    public Unit(UnitType.Type unitType)
+    {
+        _ID = NewID();
+        _type = unitType;
+    }
+
+    public int Attack()
+    {
+        return UnitType.GetUnitTypeStats(Type()).attack;
+    }
+
+    public int Defense()
+    {
+        return UnitType.GetUnitTypeStats(Type()).defense;
+    }
+}
+
 public class MapData
 {
     public string MapName;//地图名称
@@ -114,7 +198,7 @@ public class MapData
     public int Width;//地图宽度
     public List<CellPos> InVisableCell;//不可见区域
     public Dictionary<CellPos, SpecialType> SpecialCell;//特殊区域
-    public Dictionary<CellPos, LandformType.Type> Landform;//地形
+    public Dictionary<CellPos, Landform> Landform;//地形
     public Dictionary<CellPos, CellPos> River;//河流 在两个Cell之间的河流
 
     public MapData(int length, int width)
@@ -123,7 +207,7 @@ public class MapData
         Width = width;
         InVisableCell = new List<CellPos>();
         SpecialCell = new Dictionary<CellPos, SpecialType>();
-        Landform = new Dictionary<CellPos, LandformType.Type>();
+        Landform = new Dictionary<CellPos, Landform>();
         River = new Dictionary<CellPos, CellPos>();
     }
 }

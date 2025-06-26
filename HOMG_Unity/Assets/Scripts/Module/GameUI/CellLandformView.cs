@@ -69,6 +69,9 @@ public class CellLandformView : BaseView
 
     public override void Open(System.Object[] args)
     {
+        // args[0] 是地形名称，args[1] 是修正列表
+        // args[1] 中分别存储 攻击时的进攻/防御修正 和 防御时的进攻/防御修正
+
         if (args == null || args.Length < 2)
         {
             Debug.LogError("CellLandformView.Open: Invalid arguments!");
