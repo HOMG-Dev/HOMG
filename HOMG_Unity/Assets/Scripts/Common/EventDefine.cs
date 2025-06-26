@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class EventDefine
 {
+    public static readonly string Null = "NULL";
+
     //控制器事件
     public static readonly string OpenStartView = "OpenStartView";
     public static readonly string CloseStartView = "CloseStartView";
