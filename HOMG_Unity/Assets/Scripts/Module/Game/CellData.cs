@@ -3,143 +3,88 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
-public static class UnitType
-{
-    public enum Type
-    {
-        Undefined,
-        Infantry,
-        Artillery,
-        Tank,
-    }
 
-    public readonly struct UnitTypeStats
-    {
-        public readonly int attack;
-        public readonly int defense;
-
-        public UnitTypeStats(int attack, int defense)
-        {
-            this.attack = attack;
-            this.defense = defense;
-        }
-    }
-
-    private static readonly Dictionary<Type, UnitTypeStats> _unitTypeStatsDictionary = new Dictionary<Type, UnitTypeStats>
-    {
-        { Type.Infantry, new UnitTypeStats(attack: 1, defense: 1) },
-        { Type.Artillery, new UnitTypeStats(attack: 3, defense: 0) },
-        { Type.Tank, new UnitTypeStats(attack: 3, defense: 3) },
-    };
-
-    public static UnitTypeStats Infantry => _unitTypeStatsDictionary[Type.Infantry];
-    public static UnitTypeStats Artillery => _unitTypeStatsDictionary[Type.Artillery];
-    public static UnitTypeStats Tank => _unitTypeStatsDictionary[Type.Tank];
-    public static UnitTypeStats GetUnitTypeStats(UnitType.Type type)
-    {
-        return _unitTypeStatsDictionary[type];
-    }
-}
 public class Unit
 {
     private UnitType.Type _type;
     private int _ID;
     private static int _IDCounter = 0;
+
     public UnitType.Type Type()
     {
         return _type;
     }
+
     private int NewID()
     {
         return ++_IDCounter;
     }
+
     public int ID()
     {
         return _ID;
     }
+
     public static int IDCounter()
     {
         return _IDCounter;
     }
+
     public Unit()
     {
         _ID = NewID();
         _type = UnitType.Type.Undefined;
     }
+
     public Unit(UnitType.Type unitType)
     {
         _ID = NewID();
         _type = unitType;
     }
-    public int Attack() { return UnitType.GetUnitTypeStats(Type()).attack;}
-    public int Defense() { return UnitType.GetUnitTypeStats(Type()).defense;}
-}
-public static class LandFormType
-{
-    public enum Type
+
+    public int Attack()
     {
-        Undefined,
-        Plain,
-        Mountain,
+        return UnitType.GetUnitTypeStats(Type()).attack;
     }
 
-    public readonly struct LandFormTypeCorrection
+    public int Defense()
     {
-        public readonly int attackingATKCorrection; //作为进攻方战斗时获得的攻击值修正
-        public readonly int attackingDEFCorrection; //作为进攻方战斗时获得的防御值修正
-
-        public readonly int defendingATKCorrection; //作为防御方战斗时获得的攻击值修正
-        public readonly int defendingDEFCorrection; //作为防御方战斗时获得的防御值修正
-
-        public LandFormTypeCorrection(int attackingATKCorrection, int attackingDEFCorrection, int defendingATKCorrection, int defendingDEFCorrection)
-        {
-            this.attackingATKCorrection = attackingATKCorrection;
-            this.attackingDEFCorrection = attackingDEFCorrection;
-
-            this.defendingATKCorrection = defendingATKCorrection;
-            this.defendingDEFCorrection = defendingDEFCorrection;
-        }
-    }
-
-    private static readonly Dictionary<Type, LandFormTypeCorrection> _landFormCorrectionDictionary = new Dictionary<Type, LandFormTypeCorrection>
-    {
-        { Type.Plain, new LandFormTypeCorrection(attackingATKCorrection: 0, attackingDEFCorrection: 0, defendingATKCorrection: 0, defendingDEFCorrection: 0) },
-        { Type.Mountain, new LandFormTypeCorrection(attackingATKCorrection: -1, attackingDEFCorrection: 0, defendingATKCorrection: 0, defendingDEFCorrection: 0) },
-    };
-
-    public static LandFormTypeCorrection Plain => _landFormCorrectionDictionary[Type.Plain];
-    public static LandFormTypeCorrection Mountain => _landFormCorrectionDictionary[Type.Mountain];
-    public static LandFormTypeCorrection GetLandFormTypeCorrection(LandFormType.Type type)
-    {
-        return _landFormCorrectionDictionary[type];
+        return UnitType.GetUnitTypeStats(Type()).defense;
     }
 }
-public class LandForm
+
+public class Landform
 {
-    private LandFormType.Type _landFormType;
-    public LandForm(LandFormType.Type landFormType)
+    private LandformType.Type _landformType;
+
+    public Landform(LandformType.Type landformType)
     {
-        _landFormType = landFormType;
+        _landformType = landformType;
     }
-    public LandFormType.Type Type()
+
+    public LandformType.Type Type()
     {
-        return _landFormType;
+        return _landformType;
     }
+
     public int AttackingATKCorrection()
     {
-        return LandFormType.GetLandFormTypeCorrection(Type()).attackingATKCorrection;
+        return LandformType.GetLandformTypeCorrection(Type()).attackingATKCorrection;
     }
+
     public int AttackingDEFCorrection()
     {
-        return LandFormType.GetLandFormTypeCorrection(Type()).attackingDEFCorrection;
+        return LandformType.GetLandformTypeCorrection(Type()).attackingDEFCorrection;
     }
+
     public int DefendingATKCorrection()
     {
-        return LandFormType.GetLandFormTypeCorrection(Type()).defendingATKCorrection;
+        return LandformType.GetLandformTypeCorrection(Type()).defendingATKCorrection;
     }
+
     public int DefendingDEFCorrection()
     {
-        return LandFormType.GetLandFormTypeCorrection(Type()).defendingDEFCorrection;
+        return LandformType.GetLandformTypeCorrection(Type()).defendingDEFCorrection;
     }
 }
 
@@ -147,24 +92,26 @@ public class CellData
 {
     private CellPos _cellPos;
     private List<SpecialType> _specialTypeList;
-    private LandForm _landForm;
+    private Landform _landform;
     private List<Unit> _unitList;
-    public void Init(CellPos cellPos,LandFormType.Type landFormType)
+
+    public void Init(CellPos cellPos,LandformType.Type landformType)
     {
         _cellPos = cellPos;
         _specialTypeList = new List<SpecialType>();
-        _landForm = new LandForm(landFormType);
+        _landform = new Landform(landformType);
         _unitList = new List<Unit>();
     }
 
-    public CellData(CellPos cellPos,LandFormType.Type landFormType)
+    public CellData(CellPos cellPos,LandformType.Type landformType)
     {
         _cellPos = cellPos;
-        Init(cellPos, landFormType);
+        Init(cellPos, landformType);
     }
-    public CellData(int x,int y, LandFormType.Type landFormType)
+
+    public CellData(int x,int y, LandformType.Type landformType)
     {
         _cellPos = new CellPos(x,y);
-        Init(new CellPos(x,y),landFormType);
+        Init(new CellPos(x,y),landformType);
     }
 }
