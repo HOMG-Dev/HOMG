@@ -61,15 +61,6 @@ public class AvatarView : BaseView
         AddCorrectionText("666");
         AddCorrectionText("123");
         AddCorrectionText("999");
-        AddCorrectionText("666");
-        AddCorrectionText("123");
-        AddCorrectionText("999");
-        AddCorrectionText("666");
-        AddCorrectionText("123");
-        AddCorrectionText("999");
-        AddCorrectionText("666");
-        AddCorrectionText("123");
-        AddCorrectionText("999");
     }
 
     //修正按钮
@@ -171,27 +162,12 @@ public class AvatarView : BaseView
     IEnumerator LateAdjust(){
         // 等一帧 或者等 Layout rebuild
         yield return null;
-        if (_correctionText == null)
-        {
-            Debug.LogError("_correctionText is null in LateAdjust!");
-            yield break;
-        }
 
-        if (_contentRT == null)
-        {
-            Debug.LogError("_contentRT is null in LateAdjust!");
-            yield break;
-        }
-
-        if (_scroll == null)
-        {
-            Debug.LogError("_scroll is null in LateAdjust!");
-            yield break;
-        }
         // 根据 Text 的 PreferredHeight 调整 content
         float h = _correctionText.preferredHeight;
         var size = _contentRT.sizeDelta;
         _contentRT.sizeDelta = new Vector2(size.x, h);
+
         // 再根据比例更新滑块长度
         if (_scroll.verticalScrollbar != null){
             float vpH = (_scroll.viewport as RectTransform).rect.height;

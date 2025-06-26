@@ -15,17 +15,6 @@ public class MapView : BaseView
     private List<CellBehavior> _targetCells;//准备要高亮的cell
     private List<CellBehavior> _selectedCells;//选中的cell
 
-
-
-    public override void Close(params object[] args)
-    {
-        base.Close(args);
-        _highlightingCells = null;
-        _targetCells = null;
-        _selectedCells = null;
-
-    }
-
     public override void Pause(params object[] args)
     {
         base.Pause(args);
