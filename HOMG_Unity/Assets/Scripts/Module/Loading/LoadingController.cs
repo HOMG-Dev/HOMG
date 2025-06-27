@@ -46,7 +46,17 @@ public class LoadingController : BaseController
             //加载场景
             asyncOperation = SceneManager.LoadSceneAsync(loadingModel.SceneName);
         }
-        asyncOperation.completed += onLoadedEndCallBack;
+        // Ensure asyncOperation is not null before subscribing to the completed event
+        if (asyncOperation != null)
+        {
+            asyncOperation.completed += onLoadedEndCallBack;
+        }
+        else
+        {
+            Debug.LogWarning("Scene is already loaded or invalid. Skipping asyncOperation.");
+            GetModel<LoadingModel>().callback?.Invoke();
+            GameApp.ViewManager.Close(ViewType.LoadingView);
+        }
     }
 
     private void onLoadedEndCallBack(AsyncOperation ao)
