@@ -40,9 +40,23 @@ public class LoadingController : BaseController
         //打开加载视图
         GameApp.ViewManager.Open(ViewType.LoadingView);
 
-        //加载场景
-        asyncOperation = SceneManager.LoadSceneAsync(loadingModel.SceneName);
-        asyncOperation.completed += onLoadedEndCallBack;
+        //判断scene是否存在
+        if (SceneManager.GetSceneByName(loadingModel.SceneName).IsValid() == false)
+        {
+            //加载场景
+            asyncOperation = SceneManager.LoadSceneAsync(loadingModel.SceneName);
+        }
+        // Ensure asyncOperation is not null before subscribing to the completed event
+        if (asyncOperation != null)
+        {
+            asyncOperation.completed += onLoadedEndCallBack;
+        }
+        else
+        {
+            Debug.LogWarning("Scene is already loaded or invalid. Skipping asyncOperation.");
+            GetModel<LoadingModel>().callback?.Invoke();
+            GameApp.ViewManager.Close(ViewType.LoadingView);
+        }
     }
 
     private void onLoadedEndCallBack(AsyncOperation ao)

@@ -87,6 +87,11 @@ public class ViewManager
         return _openedViews.ContainsKey(viewId);
     }
 
+    public IBaseView GetView(ViewType viewType)
+    {
+        return GetView((int) viewType);
+    }
+
     //获取视图
     public IBaseView GetView(int viewId)
     {
@@ -98,7 +103,7 @@ public class ViewManager
         {
             return _viewCache[viewId];
         }
-        //Debug.Log("ViewManager GetView Error: viewId " + viewId + " doesn't exist.");  
+        //Debug.Log("ViewManager GetView Error: viewId " + viewId + " doesn't exist.");
         return null;
     }
 
