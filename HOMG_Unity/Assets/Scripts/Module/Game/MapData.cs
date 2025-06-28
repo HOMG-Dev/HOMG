@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
+[System.Serializable]
 public class CellPos
 {
     public int x;
@@ -17,7 +21,25 @@ public class CellPos
         this.x = x;
         this.y = y;
     }
+
+    // 重写 Equals 方法，用于比较 CellPos 对象是否相等
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        CellPos other = (CellPos)obj;
+        return x == other.x && y == other.y;
+    }
+
+    // 重写 GetHashCode 方法，与 Equals 配合使用
+    public override int GetHashCode()
+    {
+        return x.GetHashCode() ^ y.GetHashCode();
+    }
 }
+
+[System.Serializable]
 public static class UnitType
 {
     public enum Type
@@ -58,14 +80,18 @@ public static class UnitType
         return _unitTypeStatsDictionary[type];
     }
 }
+
+[System.Serializable]
 public enum SpecialType
 {
     military_factory,//军工厂
     civilian_factory,//民用工厂
 }
 
+[System.Serializable]
 public static class LandformType
 {
+    [System.Serializable]
     public enum Type
     {
         Undefined,
@@ -107,6 +133,7 @@ public static class LandformType
     }
 }
 
+[System.Serializable]
 public class Landform
 {
     private LandformType.Type _landformType;
@@ -119,6 +146,29 @@ public class Landform
     public LandformType.Type Type()
     {
         return _landformType;
+    }
+
+    public String TypeName()
+    {
+        // 做一个一一对应的转换
+        return _landformType switch
+        {
+            LandformType.Type.Plain => "平原",
+            LandformType.Type.Mountain => "山地",
+            _ => "未知地形"
+        };
+    }
+
+    public List<int> GetCorrectionList()
+    {
+        LandformType.LandformTypeCorrection correction = LandformType.GetLandformTypeCorrection(Type());
+        return new List<int>
+        {
+            correction.attackingATKCorrection,
+            correction.attackingDEFCorrection,
+            correction.defendingATKCorrection,
+            correction.defendingDEFCorrection
+        };
     }
 
     public int AttackingATKCorrection()
@@ -142,6 +192,7 @@ public class Landform
     }
 }
 
+[System.Serializable]
 public class Unit
 {
     private UnitType.Type _type;
@@ -191,6 +242,8 @@ public class Unit
     }
 }
 
+
+[System.Serializable]
 public class MapData
 {
     public string MapName;//地图名称

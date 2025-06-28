@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,6 +24,35 @@ public class LoadingController : BaseController
         //初始化事件
         InitModelEvent();
         InitGlobalEvent();
+    }
+
+    public override void Init()
+    {
+        base.Init();
+
+
+        // test save
+        // MapData mapData = new MapData(5, 5);
+        // mapData.MapName = "AKIOI";
+        // mapData.Landform.Add(new CellPos(0, 0), new Landform(LandformType.Type.Mountain));
+        //
+        // Debug.Log(mapData.Landform[new CellPos(0, 0)].Type());
+        //
+        // Saver.Save(mapData, "/testmap.map");
+        // Debug.Log(Application.persistentDataPath + "/testmap.map");
+
+        // test load
+        MapData loadedMapData = Loader.Load<MapData>("/testmap.map");
+        MapModel mapModel = GetControllerModel(ControllerType.Game) as MapModel;
+
+        mapModel = new MapModel(loadedMapData);
+        GameApp.ControllerManager.GetController(ControllerType.Game).SetModel(mapModel);
+
+        MapData testMapData = GameApp.ControllerManager.GetModel<MapModel>(ControllerType.Game).mapData;
+        Debug.Log("---------------------------------------");
+        Debug.Log(testMapData.MapName);
+        Debug.Log(testMapData.Landform[new CellPos(0, 0)].Type());
+        // test successfully
     }
 
     public override void InitModelEvent()

@@ -11,6 +11,8 @@ public class CellBehavior : MonoBehaviour
     //鼠标按下的颜色
     public Color mouseDownColor;
 
+    public CellPos cellPos;
+
     public void Highlight()
     {
         mouseEnterColor.a = 0.4f;
