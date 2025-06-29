@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,6 +26,35 @@ public class LoadingController : BaseController
         InitGlobalEvent();
     }
 
+    public override void Init()
+    {
+        base.Init();
+
+
+        // test save
+        // MapData mapData = new MapData(5, 5);
+        // mapData.MapName = "AKIOI";
+        // mapData.Landform.Add(new CellPos(0, 0), new Landform(LandformType.Type.Mountain));
+        //
+        // Debug.Log(mapData.Landform[new CellPos(0, 0)].Type());
+        //
+        // Saver.Save(mapData, "/testmap.map");
+        // Debug.Log(Application.persistentDataPath + "/testmap.map");
+
+        // test load
+        MapData loadedMapData = Loader.Load<MapData>("/testmap.map");
+        MapModel mapModel = GetControllerModel(ControllerType.Game) as MapModel;
+
+        mapModel = new MapModel(loadedMapData);
+        GameApp.ControllerManager.GetController(ControllerType.Game).SetModel(mapModel);
+
+        MapData testMapData = GameApp.ControllerManager.GetModel<MapModel>(ControllerType.Game).mapData;
+        Debug.Log("---------------------------------------");
+        Debug.Log(testMapData.MapName);
+        Debug.Log(testMapData.Landform[new CellPos(0, 0)].Type());
+        // test successfully
+    }
+
     public override void InitModelEvent()
     {
         base.InitModelEvent();
@@ -40,9 +70,23 @@ public class LoadingController : BaseController
         //打开加载视图
         GameApp.ViewManager.Open(ViewType.LoadingView);
 
-        //加载场景
-        asyncOperation = SceneManager.LoadSceneAsync(loadingModel.SceneName);
-        asyncOperation.completed += onLoadedEndCallBack;
+        //判断scene是否存在
+        if (SceneManager.GetSceneByName(loadingModel.SceneName).IsValid() == false)
+        {
+            //加载场景
+            asyncOperation = SceneManager.LoadSceneAsync(loadingModel.SceneName);
+        }
+        // Ensure asyncOperation is not null before subscribing to the completed event
+        if (asyncOperation != null)
+        {
+            asyncOperation.completed += onLoadedEndCallBack;
+        }
+        else
+        {
+            Debug.LogWarning("Scene is already loaded or invalid. Skipping asyncOperation.");
+            GetModel<LoadingModel>().callback?.Invoke();
+            GameApp.ViewManager.Close(ViewType.LoadingView);
+        }
     }
 
     private void onLoadedEndCallBack(AsyncOperation ao)

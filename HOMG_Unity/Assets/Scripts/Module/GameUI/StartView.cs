@@ -30,10 +30,10 @@ public class StartView : BaseView
     {
         //ApplyFunc(EventDefine.OpenMapView);
         ApplyFunc(EventDefine.CloseStartView);
+
         LoadingModel loadingModel = new LoadingModel();
         loadingModel.SceneName = "Map";
         Controller.ApplyControllerFunc(ControllerType.Loading, EventDefine.LoadingScene, loadingModel);
-
     }
 
     private void onSetBtn()

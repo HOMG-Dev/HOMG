@@ -40,8 +40,11 @@ public class MapView : BaseView
 
     private void CreateCells()
     {
-        //MapData mapData = this.Controller.GetModel<MapModel>().mapData;
-        MapData mapData = new MapData(20, 20);
+        MapData mapData = this.Controller.GetModel<MapModel>().mapData;
+        Debug.Log("---------------------------------------");
+        Debug.Log(mapData.MapName);
+        Debug.Log(mapData.Landform[new CellPos(0, 0)].Type());
+        // MapData mapData = new MapData(20, 20);
         int length = mapData.Length;
         int width = mapData.Width;
         List<CellPos> inVisableCell = mapData.InVisableCell;
@@ -64,6 +67,7 @@ public class MapView : BaseView
                 cell.transform.localPosition = new Vector3(i * (ConstantDefine.CellLength) + delta, 25, j * (ConstantDefine.CellWidth/2));
                 cell.name = i + "_" + j;
                 cell.GetComponent<CellBehavior>().Lowlight();
+                cell.GetComponent<CellBehavior>().cellPos = new CellPos(i, j);
                 //mc.Lowlight();
                 //cell.GetComponent<CellBehavior>().Init(i, j);
             }
@@ -169,6 +173,7 @@ public class MapView : BaseView
     {
         if (Input.GetMouseButtonDown(0))
         {
+            ApplyFunc(EventDefine.ClickCell, myCell);
             if (_selectedCells.Contains(myCell) == true)
             {
                 myCell.Lowlight();

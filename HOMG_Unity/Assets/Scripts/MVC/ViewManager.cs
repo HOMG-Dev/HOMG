@@ -82,9 +82,18 @@ public class ViewManager
     }
 
     //视图是否开启
+    public bool IsViewOpened(ViewType viewType)
+    {
+        return IsViewOpened((int)viewType);
+    }
     public bool IsViewOpened(int viewId)
     {
         return _openedViews.ContainsKey(viewId);
+    }
+
+    public IBaseView GetView(ViewType viewType)
+    {
+        return GetView((int) viewType);
     }
 
     //获取视图
@@ -98,7 +107,7 @@ public class ViewManager
         {
             return _viewCache[viewId];
         }
-        //Debug.Log("ViewManager GetView Error: viewId " + viewId + " doesn't exist.");  
+        //Debug.Log("ViewManager GetView Error: viewId " + viewId + " doesn't exist.");
         return null;
     }
 

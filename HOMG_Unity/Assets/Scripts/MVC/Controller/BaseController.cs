@@ -23,9 +23,9 @@ public class BaseController
 
 
     //打开视图
-    public virtual void OpenView(IBaseView view) 
+    public virtual void OpenView(IBaseView view)
     {
-    
+
     }
 
     //关闭视图
@@ -59,7 +59,7 @@ public class BaseController
         if (message.ContainsKey(eventName) == true)
         {
             message[eventName]?.Invoke(args);
-        } 
+        }
         else
         {
             Debug.LogError("Controller Function Apply Error: Event " + eventName + " doesn't exist.");
@@ -95,6 +95,11 @@ public class BaseController
     }
 
     //获取其他模块的模型
+    public BaseModel GetControllerModel(ControllerType type)
+    {
+        return GetControllerModel((int)type);
+    }
+
     public BaseModel GetControllerModel(int controllerId)
     {
         return GameApp.ControllerManager.GetModel(controllerId);

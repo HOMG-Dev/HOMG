@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class GameController : BaseController
 {
+    public MapRender mapRender;
+
     public GameController() : base()
     {
 
@@ -60,11 +62,17 @@ public class GameController : BaseController
 
         //退出对局
         RegisterFunc(EventDefine.QuitGame, QuitGame);
+
+        //Render事件
+        RegisterFunc(EventDefine.ClickCell, ClickCell);//点击地图格子事件
+
     }
 
     private void OpenMapView(System.Object[] args)
     {
         GameApp.ViewManager.Open(ViewType.MapView, args);
+
+        mapRender = new MapRender(GetModel<MapModel>());
     }
 
     private void CloseMapView(System.Object[] args)
@@ -100,6 +108,18 @@ public class GameController : BaseController
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenStartView);
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseAvatarView);
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseGameUIView);
+    }
+
+    private void ClickCell(System.Object[] args)
+    {
+        CellBehavior cell = args[0] as CellBehavior;
+        if (cell == null)
+        {
+            Debug.LogError("ClickCell: CellBehavior is null");
+            return;
+        }
+        CellPos cellPos = cell.cellPos;
+        mapRender.ClickCell(cellPos);
     }
 
 }
