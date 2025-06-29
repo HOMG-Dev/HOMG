@@ -243,6 +243,23 @@ public class Unit
 }
 
 
+public class Team
+{
+    public string Name;//队伍名称
+    public int ID;//队伍ID
+    public string TeamIntro;//队伍介绍
+    public string CombatObjective;//战斗目标
+    public List<Unit> Units;//队伍中的单位
+
+    public Team(string name, int id)
+    {
+        Name = name;
+        ID = id;
+        Units = new List<Unit>();
+    }
+}
+
+
 [System.Serializable]
 public class MapData
 {
@@ -253,6 +270,7 @@ public class MapData
     public Dictionary<CellPos, SpecialType> SpecialCell;//特殊区域
     public Dictionary<CellPos, Landform> Landform;//地形
     public Dictionary<CellPos, CellPos> River;//河流 在两个Cell之间的河流
+    public Dictionary<int, Team> Teams;//地图上的所有队伍
 
     public MapData(int length, int width)
     {
