@@ -33,4 +33,7 @@ public static class EventDefine
 
     public static readonly string OpenCellLandformView = "OpenCellLandformView";
     public static readonly string CloseCellLandformView = "CloseCellLandformView";
+
+    public static readonly string OpenCellUnitView = "OpenCellUnitView";
+    public static readonly string CloseCellUnitView = "CloseCellUnitView";
 }

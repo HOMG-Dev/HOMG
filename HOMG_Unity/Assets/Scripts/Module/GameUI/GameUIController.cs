@@ -57,6 +57,15 @@ public class GameUIController : BaseController
             sortintOrder = 777,
         });
 
+        //地形视图
+        GameApp.ViewManager.Register(ViewType.CellUnitView, new ViewInfo()
+        {
+            PrefabName = "CellUnitView",
+            parentTf = GameApp.ViewManager.canvasTf,
+            controller = this,
+            sortintOrder = 666,
+        });
+
         //初始化事件
         InitModelEvent();
         InitGlobalEvent();
@@ -80,6 +89,9 @@ public class GameUIController : BaseController
 
         RegisterFunc(EventDefine.CloseCellLandformView, CloseCellLandformView);
         RegisterFunc(EventDefine.OpenCellLandformView, OpenCellLandformView);
+
+        RegisterFunc(EventDefine.OpenCellUnitView, OpenCellUnitView);
+        RegisterFunc(EventDefine.CloseCellUnitView, CloseCellUnitView);
     }
 
     public override void InitGlobalEvent()
@@ -135,5 +147,15 @@ public class GameUIController : BaseController
     private void CloseCellLandformView(System.Object[] args)
     {
         GameApp.ViewManager.Close(ViewType.CellLandformView, args);
+    }
+
+    private void OpenCellUnitView(System.Object[] args)
+    {
+        GameApp.ViewManager.Open(ViewType.CellUnitView, args);
+    }
+
+    private void CloseCellUnitView(System.Object[] args)
+    {
+        GameApp.ViewManager.Close(ViewType.CellUnitView, args);
     }
 }

@@ -169,7 +169,7 @@ public class CellLandformView : BaseView
 
     private Sprite LoadLandformSprite(string landformType)
     {
-        //从Resources文件夹加载
+        //从Resources文件夹加载（未实现）
         string spritePath = $"Landforms/{landformType}";
         Sprite sprite = Resources.Load<Sprite>(spritePath);
 
