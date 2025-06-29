@@ -82,6 +82,10 @@ public class ViewManager
     }
 
     //视图是否开启
+    public bool IsViewOpened(ViewType viewType)
+    {
+        return IsViewOpened((int)viewType);
+    }
     public bool IsViewOpened(int viewId)
     {
         return _openedViews.ContainsKey(viewId);

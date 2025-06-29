@@ -34,7 +34,7 @@ public class CellLandformView : BaseView
         Transform attackingArea = transform.Find("bg/AttackingArea");
         Transform defendingArea = transform.Find("bg/DefendingArea");
 
-        _landformNameText = Find("bg/landformNameText")?.GetComponent<Text>();
+        _landformNameText = Find("bg/LandformName")?.GetComponent<Text>();
 
         if (attackingArea != null)
         {
@@ -44,8 +44,8 @@ public class CellLandformView : BaseView
 
         if (defendingArea != null)
         {
-            _defendingATKText = attackingArea.Find("atkText")?.GetComponent<Text>();
-            _defendingDEFText = attackingArea.Find("defText")?.GetComponent<Text>();
+            _defendingATKText = defendingArea.Find("atkText")?.GetComponent<Text>();
+            _defendingDEFText = defendingArea.Find("defText")?.GetComponent<Text>();
         }
 
         // 检查组件是否找到

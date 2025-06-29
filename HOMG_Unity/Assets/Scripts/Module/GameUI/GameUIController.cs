@@ -129,6 +129,11 @@ public class GameUIController : BaseController
 
     private void OpenCellLandformView(System.Object[] args)
     {
+        if (GameApp.ViewManager.IsViewOpened(ViewType.CellLandformView))
+        {
+            // 如果视图已经打开，则关闭它
+            GameApp.ViewManager.Close(ViewType.CellLandformView, null);
+        }
         GameApp.ViewManager.Open(ViewType.CellLandformView, args);
     }
 

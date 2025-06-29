@@ -31,6 +31,24 @@ public class ControllerManager
         _modules.Add(controllerId, controller);
     }
 
+    //获取控制器
+    public BaseController GetController(ControllerType type)
+    {
+        return GetController((int)type);
+    }
+    public BaseController GetController(int controllerId)
+    {
+        if (_modules.ContainsKey(controllerId) == true)
+        {
+            return _modules[controllerId];
+        }
+        else
+        {
+            Debug.LogError("ControllerManager GetController Error: controllerId " + controllerId + " doesn't exist!");
+            return null;
+        }
+    }
+
     //删除控制器
     public void Unregister(int controllerId)
     {
@@ -84,6 +102,14 @@ public class ControllerManager
     }
 
     //获取控制器的模型
+    public T GetModel<T>(ControllerType type) where T : BaseModel
+    {
+        return (T)GetModel((int)type);
+    }
+    public BaseModel GetModel(ControllerType type)
+    {
+        return GetModel((int)type);
+    }
     public BaseModel GetModel(int controllerId)
     {
         if (_modules.ContainsKey(controllerId) == true)
