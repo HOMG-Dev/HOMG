@@ -24,6 +24,9 @@ public class AvatarView : BaseView
     public override void Open(System.Object[] args)
     {
         UpdateContent();
+
+        //默认显示修正
+        ShowContent(ContentType.Correction);
     }
 
     //初始化按钮
@@ -50,8 +53,6 @@ public class AvatarView : BaseView
         InitBtn();
         //获取修正文本组件
         InitCorrectionText();
-        //默认显示修正
-        ShowContent(ContentType.Correction);
     }
 
     //修正按钮

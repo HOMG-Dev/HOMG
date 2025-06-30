@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,11 +10,10 @@ using UnityEngine.UI;
 /// </summary>
 public class CellUnitView : BaseView
 {
-    private float x;
-    private float y;
     static private float xBias = -100f;
     static private float yBias = -100f;
     Transform _cellUnitPanel;
+
     //滑动视图相关
     private ScrollRect _scrollRect;
     private Transform _scrollContent;
@@ -27,17 +27,22 @@ public class CellUnitView : BaseView
     //监听器相关
     private List<Button> _sellectedButtons = new List<Button>();
 
+    //接口相关
+    private List<float> _coordinate = new List<float>();
+    private List<UnitInCellUnitView> _unitList = new List<UnitInCellUnitView>();
+
     public override void Open(params object[] args)
     {
         base.Open(args);
 
-        if(args[0] == null || args[1] == null)
-            Debug.Log("不合法的坐标");
-        else
+        if(args.Length < 2)
         {
-            x = (int)args[0];
-            y = (int)args[1];
+            Debug.LogError("CellUnitView Open method requires at least 3 arguments.");
+            return;
         }
+        _coordinate = args[0] as List<float>;
+
+        _unitList = args[1] as List<UnitInCellUnitView>;
 
         UpdatePosition();
     }
@@ -49,17 +54,14 @@ public class CellUnitView : BaseView
         _cellUnitPanel = transform.Find("bg");
         buttonPrefab = Resources.Load<GameObject>("Prefab/CellUnitViewButtonPrefab");
         InitScrollView();
-
-        // 示例按钮
-        CreateTestButtons();
     }
 
     private void UpdatePosition()
     {
         RectTransform cellUnitPanelPosition = _cellUnitPanel.GetComponent<RectTransform>();
 
-        float posX = x + xBias;
-        float posY = y + yBias;
+        float posX = _coordinate[0] + xBias;
+        float posY = _coordinate[1] + yBias;
         cellUnitPanelPosition.anchoredPosition = new Vector2(posX, posY);
     }
 
@@ -104,11 +106,11 @@ public class CellUnitView : BaseView
     }
 
     // 批量创建按钮
-    public void CreateButtons(List<ButtonInfo> buttonInfos)
+    public void CreateButtons()
     {
-        foreach (var buttonInfo in buttonInfos)
+        foreach (var unit in _unitList)
         {
-            CreateButton(buttonInfo.text, buttonInfo.ID);
+            CreateButton(unit.name, unit.id);
         }
     }
 
@@ -121,21 +123,11 @@ public class CellUnitView : BaseView
         }
     }
 
-    // 测试按钮
-    private void CreateTestButtons()
-    {
-        // 创建一些测试按钮
-        for (int i = 0; i < 10; i++)
-        {
-            int index = i; // 闭包变量
-            CreateButton($"按钮 {i + 1}", $"{i}");
-        }
-    }
-
     private void OnButtonClick(Button button)
     {
-        // 处理按钮点击事件
+        // 处理按钮点击事件（目前尚未实现）
         Debug.Log($"按钮 {button.name} 被点击");
+        // ApplyControllerFunc(ControllerType.Game, EventDefine);
 
         // 高亮按钮
         if(_sellectedButtons.Contains(button) == false)
@@ -160,21 +152,5 @@ public class CellUnitView : BaseView
         {
             button.GetComponent<Image>().color = Color.white; // 恢复默认颜色
         }
-    }
-}
-
-/// <summary>
-/// 按钮信息结构体
-/// </summary>
-[System.Serializable]
-public class ButtonInfo
-{
-    public string text;
-    public string ID;
-
-    public ButtonInfo(string text, string ID)
-    {
-        this.text = text;
-        this.ID = ID;
     }
 }
