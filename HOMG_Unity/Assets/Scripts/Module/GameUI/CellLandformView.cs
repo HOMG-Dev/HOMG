@@ -20,11 +20,10 @@ public class CellLandformView : BaseView
 
     private Image _landformImage;
 
-    protected override void OnAwake()
+    public override void InitData()
     {
-        base.OnAwake();
+        base.InitData();
 
-        // 获取UI组件引用
         InitializeUIComponents();
     }
 
@@ -169,7 +168,7 @@ public class CellLandformView : BaseView
 
     private Sprite LoadLandformSprite(string landformType)
     {
-        //从Resources文件夹加载
+        //从Resources文件夹加载（未实现）
         string spritePath = $"Landforms/{landformType}";
         Sprite sprite = Resources.Load<Sprite>(spritePath);
 

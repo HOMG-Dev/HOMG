@@ -15,4 +15,5 @@ public enum ViewType
     InGameSettingView,
     AvatarView,
     CellLandformView,
+    CellUnitView,
 }

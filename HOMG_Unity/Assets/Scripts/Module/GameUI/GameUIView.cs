@@ -10,6 +10,11 @@ public class GameUIView : BaseView
     protected override void OnAwake()
     {
         base.OnAwake();
+    }
+
+    public override void InitData()
+    {
+        base.InitData();
 
         //初始化按钮
         InitBtn();

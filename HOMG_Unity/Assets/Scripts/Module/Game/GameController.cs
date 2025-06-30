@@ -109,6 +109,7 @@ public class GameController : BaseController
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseAvatarView);
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseGameUIView);
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellLandformView);
+        ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellUnitView);
     }
 
     private void ClickCell(System.Object[] args)

@@ -21,14 +21,12 @@ public class AvatarView : BaseView
         Introduction
     }
 
-    protected override void OnAwake()
+    public override void Open(System.Object[] args)
     {
-        base.OnAwake();
+        UpdateContent();
 
-        //初始化按钮
-        InitBtn();
-        //获取修正文本组件
-        InitCorrectionText();
+        //默认显示修正
+        ShowContent(ContentType.Correction);
     }
 
     //初始化按钮
@@ -40,9 +38,6 @@ public class AvatarView : BaseView
 
     private void InitCorrectionText()
     {
-        _scroll = Find<ScrollRect>("ContentArea/CorrectionContent");
-        _contentRT = Find<RectTransform>("ContentArea/CorrectionContent/CorrectionText/Content");
-
         //获取修正文本组件
         _correctionText = Find<Text>("ContentArea/CorrectionContent/CorrectionText/Content");
         if (_correctionText == null)
@@ -54,13 +49,10 @@ public class AvatarView : BaseView
     public override void InitData()
     {
         base.InitData();
-        //默认显示修正内容
-        ShowContent(ContentType.Correction);
-
-        //示例
-        AddCorrectionText("666");
-        AddCorrectionText("123");
-        AddCorrectionText("999");
+        //初始化按钮
+        InitBtn();
+        //获取修正文本组件
+        InitCorrectionText();
     }
 
     //修正按钮
@@ -129,7 +121,6 @@ public class AvatarView : BaseView
         {
             _correctionText.text = correctionText;
         }
-        StartCoroutine(LateAdjust());
     }
 
     //设置修正文本内容（替换所有内容）
@@ -141,7 +132,7 @@ public class AvatarView : BaseView
         _correctionText.text = correctionText;
     }
 
-    /// 清空修正文本
+    // 清空修正文本
     public void ClearCorrectionText()
     {
         if (_correctionText == null)
@@ -150,7 +141,7 @@ public class AvatarView : BaseView
         _correctionText.text = "";
     }
 
-    /// 获取当前修正文本内容
+    // 获取当前修正文本内容
     public string GetCorrectionText()
     {
         if (_correctionText == null)
@@ -159,19 +150,11 @@ public class AvatarView : BaseView
         return _correctionText.text;
     }
 
-    IEnumerator LateAdjust(){
-        // 等一帧 或者等 Layout rebuild
-        yield return null;
+    // 简介相关操作
 
-        // 根据 Text 的 PreferredHeight 调整 content
-        float h = _correctionText.preferredHeight;
-        var size = _contentRT.sizeDelta;
-        _contentRT.sizeDelta = new Vector2(size.x, h);
 
-        // 再根据比例更新滑块长度
-        if (_scroll.verticalScrollbar != null){
-            float vpH = (_scroll.viewport as RectTransform).rect.height;
-            _scroll.verticalScrollbar.size = Mathf.Clamp01(vpH / h);
-        }
+    private void UpdateContent()
+    {
+        return;
     }
 }
