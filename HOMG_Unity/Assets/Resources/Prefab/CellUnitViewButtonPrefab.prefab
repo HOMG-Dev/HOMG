@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8295510954871241}
   - component: {fileID: 4641504535612457603}
   m_Layer: 5
-  m_Name: UnitButton
+  m_Name: CellUnitViewButtonPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

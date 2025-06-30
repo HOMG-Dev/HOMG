@@ -20,11 +20,10 @@ public class CellLandformView : BaseView
 
     private Image _landformImage;
 
-    protected override void OnAwake()
+    public override void InitData()
     {
-        base.OnAwake();
+        base.InitData();
 
-        // 获取UI组件引用
         InitializeUIComponents();
     }
 
