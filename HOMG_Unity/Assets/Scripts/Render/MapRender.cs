@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,12 +38,12 @@ public class MapRender
         }
         else
         {
-            landform = new Landform(LandformType.Type.Plain);
+            landform = new Landform("Plain");
         }
-        Debug.Log($"Landform at cell ({cellPos.x}, {cellPos.y}): {landform.Type()}");
+        Debug.Log($"Landform at cell ({cellPos.x}, {cellPos.y}): {landform.Type}");
         // 触发打开地形视图的事件
         object[] args = new object[2];
-        args[0] = landform.TypeName();
+        args[0] = landform.Type;
         args[1] = landform.GetCorrectionList();
 
         mapModel.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenCellLandformView, args);

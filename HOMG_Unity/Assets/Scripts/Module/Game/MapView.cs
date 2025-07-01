@@ -43,7 +43,7 @@ public class MapView : BaseView
         MapData mapData = this.Controller.GetModel<MapModel>().mapData;
         Debug.Log("---------------------------------------");
         Debug.Log(mapData.MapName);
-        Debug.Log(mapData.Landform[new CellPos(0, 0)].Type());
+        Debug.Log(mapData.Landform[new CellPos(0, 0)].Type);
         // MapData mapData = new MapData(20, 20);
         int length = mapData.Length;
         int width = mapData.Width;

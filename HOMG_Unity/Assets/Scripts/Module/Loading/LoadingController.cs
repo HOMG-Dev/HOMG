@@ -34,10 +34,8 @@ public class LoadingController : BaseController
         // test save
         MapData mapData = new MapData(5, 5);
         mapData.MapName = "AKIOI";
-        mapData.Landform.Add(new CellPos(0, 0), new Landform(LandformType.Type.Mountain));
-
-        Debug.Log(mapData.Landform[new CellPos(0, 0)].Type());
-
+        mapData.Landform.Add(new CellPos(0, 0), new Landform("Mountain"));
+        Debug.Log(mapData.Landform[new CellPos(0, 0)].Type);
         Saver.Save(mapData, "/testmap.map");
         Debug.Log(Application.persistentDataPath + "/testmap.map");
 
@@ -51,7 +49,7 @@ public class LoadingController : BaseController
         MapData testMapData = GameApp.ControllerManager.GetModel<MapModel>(ControllerType.Game).mapData;
         Debug.Log("---------------------------------------");
         Debug.Log(testMapData.MapName);
-        Debug.Log(testMapData.Landform[new CellPos(0, 0)].Type());
+        Debug.Log(testMapData.Landform[new CellPos(0, 0)].Type);
         // test successfully
     }
 
