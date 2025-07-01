@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 public class AvatarView : BaseView
 {
-    private ContentType _currentContentType = ContentType.None;
+    private ContentType _currentContentType;
     private List<int> _correctionList = new List<int>();
     private Text _correctionText;
     private ScrollRect _scroll;
@@ -23,7 +23,7 @@ public class AvatarView : BaseView
 
     public override void Open(System.Object[] args)
     {
-        UpdateContent();
+        UpdateAvatarViewCorrection(args);
 
         //默认显示修正
         ShowContent(ContentType.Correction);
@@ -53,6 +53,8 @@ public class AvatarView : BaseView
         InitBtn();
         //获取修正文本组件
         InitCorrectionText();
+
+        GameApp.ControllerManager.GetController(ControllerType.Game).RegisterFunc(EventDefine.UpdateCorrection, UpdateAvatarViewCorrection);
     }
 
     //修正按钮
@@ -100,12 +102,6 @@ public class AvatarView : BaseView
         _currentContentType = ContentType.None;
     }
 
-    //获取当前显示的内容类型
-    public ContentType GetCurrentContentType()
-    {
-        return _currentContentType;
-    }
-
     //修正文本相关操作
     public void AddCorrectionText(string correctionText)
     {
@@ -124,12 +120,16 @@ public class AvatarView : BaseView
     }
 
     //设置修正文本内容（替换所有内容）
-    public void SetCorrectionText(string correctionText)
+    public void SetCorrectionText()
     {
         if (_correctionText == null)
             return;
 
-        _correctionText.text = correctionText;
+        foreach (var x in _correctionList)
+        {
+            // 需要字典的实现
+            AddCorrectionText("");
+        }
     }
 
     // 清空修正文本
@@ -141,20 +141,24 @@ public class AvatarView : BaseView
         _correctionText.text = "";
     }
 
-    // 获取当前修正文本内容
-    public string GetCorrectionText()
+    // 简介相关操作（未实现）
+
+
+    // 更新修正内容
+    private void UpdateAvatarViewCorrection(System.Object[] args)
     {
-        if (_correctionText == null)
-            return "";
+        if (args == null || args.Length < 1)
+        {
+            Debug.LogWarning("UpdateAvatarViewCorrection: No correction data provided!");
+            _correctionList = new List<int>(1);
+        }
+        else
+        {
+            _correctionList = args[0] as List<int>;
+        }
 
-        return _correctionText.text;
-    }
+        ClearCorrectionText();
 
-    // 简介相关操作
-
-
-    private void UpdateContent()
-    {
-        return;
+        SetCorrectionText();
     }
 }

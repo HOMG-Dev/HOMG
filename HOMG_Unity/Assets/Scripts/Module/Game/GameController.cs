@@ -105,11 +105,7 @@ public class GameController : BaseController
 
         //关闭地图 或者 禁用脚本的update
         //todo..
-        ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenStartView);
-        ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseAvatarView);
-        ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseGameUIView);
-        ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellLandformView);
-        ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellUnitView);
+        ApplyControllerFunc(ControllerType.GameUI, EventDefine.QuitGame);
     }
 
     private void ClickCell(System.Object[] args)

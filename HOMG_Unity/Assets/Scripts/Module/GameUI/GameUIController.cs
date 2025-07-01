@@ -31,9 +31,9 @@ public class GameUIController : BaseController
         });
 
         //对局内UI视图
-        GameApp.ViewManager.Register(ViewType.GameUIView, new ViewInfo()
+        GameApp.ViewManager.Register(ViewType.MainUIView, new ViewInfo()
         {
-            PrefabName = "GameUIView",
+            PrefabName = "MainUIView",
             parentTf = GameApp.ViewManager.canvasTf,
             controller = this,
             sortintOrder = 888,
@@ -77,8 +77,8 @@ public class GameUIController : BaseController
         RegisterFunc(EventDefine.OpenStartView, OpenStartView);
         RegisterFunc(EventDefine.CloseStartView, CloseStartView);
 
-        RegisterFunc(EventDefine.OpenGameUIView, OpenGameUIView);
-        RegisterFunc(EventDefine.CloseGameUIView, CloseGameUIView);
+        RegisterFunc(EventDefine.OpenMainUIView, OpenMainUIView);
+        RegisterFunc(EventDefine.CloseMainUIView, CloseMainUIView);
 
         RegisterFunc(EventDefine.OpenSettingView, OpenSettingView);
         RegisterFunc(EventDefine.CloseSettingView, CloseSettingView);
@@ -92,6 +92,13 @@ public class GameUIController : BaseController
 
         RegisterFunc(EventDefine.OpenCellUnitView, OpenCellUnitView);
         RegisterFunc(EventDefine.CloseCellUnitView, CloseCellUnitView);
+
+        // 退出游戏的一系列事件
+        RegisterFunc(EventDefine.QuitGame, CloseCellUnitView);
+        RegisterFunc(EventDefine.QuitGame, CloseCellLandformView);
+        RegisterFunc(EventDefine.QuitGame, CloseAvatarView);
+        RegisterFunc(EventDefine.QuitGame, CloseMainUIView);
+        RegisterFunc(EventDefine.QuitGame, OpenStartView);
     }
 
     public override void InitGlobalEvent()
@@ -129,14 +136,14 @@ public class GameUIController : BaseController
         GameApp.ViewManager.Close(ViewType.SettingView, args);
     }
 
-    private void OpenGameUIView(System.Object[] args)
+    private void OpenMainUIView(System.Object[] args)
     {
-        GameApp.ViewManager.Open(ViewType.GameUIView, args);
+        GameApp.ViewManager.Open(ViewType.MainUIView, args);
     }
 
-    private void CloseGameUIView(System.Object[] args)
+    private void CloseMainUIView(System.Object[] args)
     {
-        GameApp.ViewManager.Close(ViewType.GameUIView, args);
+        GameApp.ViewManager.Close(ViewType.MainUIView, args);
     }
 
     private void OpenCellLandformView(System.Object[] args)
