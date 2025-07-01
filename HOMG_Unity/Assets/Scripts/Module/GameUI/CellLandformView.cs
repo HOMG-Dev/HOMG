@@ -61,7 +61,6 @@ public class CellLandformView : BaseView
 
         if (_landformImage == null)
         {
-
             Debug.LogWarning("LandformImage not found in bg, consider adding it to the hierarchy");
         }
     }
@@ -73,7 +72,7 @@ public class CellLandformView : BaseView
 
         if (args == null || args.Length < 2)
         {
-            Debug.LogError("CellLandformView.Open: Invalid arguments!");
+            Debug.LogWarning("CellLandformView.Open: Invalid arguments!");
             return;
         }
 
@@ -168,7 +167,7 @@ public class CellLandformView : BaseView
 
     private Sprite LoadLandformSprite(string landformType)
     {
-        //从Resources文件夹加载（未实现）
+        //从Resources文件夹加载
         string spritePath = $"Landforms/{landformType}";
         Sprite sprite = Resources.Load<Sprite>(spritePath);
 

@@ -16,8 +16,8 @@ public static class EventDefine
     public static readonly string OpenMapView = "OpenMapView";
     public static readonly string CloseMapView = "CloseMapView";
 
-    public static readonly string OpenGameUIView = "OpenGameUIView";
-    public static readonly string CloseGameUIView = "CloseGameUIView";
+    public static readonly string OpenMainUIView = "OpenMainUIView";
+    public static readonly string CloseMainUIView = "CloseMainUIView";
 
     public static readonly string OpenInGameSettingView = "OpenInGameSettingView";
     public static readonly string CloseInGameSettingView = "CloseInGameSettingView";
@@ -38,4 +38,7 @@ public static class EventDefine
     public static readonly string CloseCellUnitView = "CloseCellUnitView";
 
     public static readonly string ClickCell = "ClickCell";
+
+    public static readonly string UpdateCorrection = "UpdateCorrection";
+    public static readonly string UpdateIntroduction = "UpdateIntroduction";
 }

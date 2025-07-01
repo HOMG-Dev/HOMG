@@ -100,7 +100,7 @@ public class LoadingController : BaseController
         //打开地图视图
         //GameApp.ViewManager.Open(ViewType.MapView);
         ApplyControllerFunc(ControllerType.Game, EventDefine.OpenMapView);
-        ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenGameUIView);
+        ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenMainUIView);
     }
 
 }

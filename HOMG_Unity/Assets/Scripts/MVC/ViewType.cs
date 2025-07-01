@@ -11,7 +11,7 @@ public enum ViewType
     SettingView,
     MapView,
     LoadingView,
-    GameUIView,
+    MainUIView,
     InGameSettingView,
     AvatarView,
     CellLandformView,
