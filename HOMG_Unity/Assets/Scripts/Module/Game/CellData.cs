@@ -37,7 +37,7 @@ public class CellData
     private CellPos _cellPos;
     private List<SpecialType> _specialTypeList;
     private Landform _landform;
-    private List<UnitData> _units;
+    private List<Unit> _units;
 
     private MapModel _mapModel;
 
@@ -52,7 +52,7 @@ public class CellData
         _specialTypeList = new List<SpecialType>();
         UpdateMapModel();
         _landform = _mapModel.mapData.landformManager.GetLandformData(landformType);
-        _units = new List<UnitData>();
+        _units = new List<Unit>();
     }
 
     public CellData(CellPos cellPos, string landformType)

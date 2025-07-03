@@ -16,31 +16,31 @@ public class LandformManager
         /* 测试代码结束 */
     }
 
-    public void Register(string landformType, Landform landformData)
+    public void Register(string landformType, Landform landform)
     {
         if (_landformManager.ContainsKey(landformType))
         {
-            Debug.LogError("LandformManager Register Error:以" + landformType + "为键的lanformData已经存在!");
+            Debug.LogError("LandformManager Register Error:以" + landformType + "为键的lanform已经存在!");
             return;
         }
-        _landformManager.Add(landformType, landformData);
+        _landformManager.Add(landformType, landform);
     }
 
     public void Unregister(string landformType)
     {
         if (!_landformManager.ContainsKey(landformType))
         {
-            Debug.LogError("LandformManager Unregister Error:以" + landformType + "为键的landformData并不存在!");
+            Debug.LogError("LandformManager Unregister Error:以" + landformType + "为键的landform并不存在!");
             return;
         }
         _landformManager.Remove(landformType);
     }
 
-    public Landform GetLandformData(string landformType)
+    public Landform GetLandform(string landformType)
     {
         if (!_landformManager.ContainsKey(landformType))
         {
-            Debug.LogError("LandformManager GetLandformData Error:以" + landformType + "为键的landformData并不存在!");
+            Debug.LogError("LandformManager GetLandform Error:以" + landformType + "为键的landform并不存在!");
             return null;
         }
         return _landformManager[landformType];
