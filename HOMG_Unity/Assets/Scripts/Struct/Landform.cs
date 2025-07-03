@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LandformData
+[System.Serializable]
+public class Landform
 {
     private string _landformType;
     private int _attackingATKCorrection;
@@ -39,12 +40,21 @@ public class LandformData
     public int AttackingDEFCorrection => GetAttackingDEFCorrection();
     public int DefendingATKCorrection => GetDefendingATKCorrection();
     public int DefendingDEFCorrection => GetDefendingDEFCorrection();
-    public LandformData(string landformType, int attackingATKCorrection, int attackingDEFCorrection, int defendingATKCorrection, int defendingDEFCorrection)
+    public Landform(string landformType, int attackingATKCorrection, int attackingDEFCorrection, int defendingATKCorrection, int defendingDEFCorrection)
     {
         _landformType = landformType;
         _attackingATKCorrection = attackingATKCorrection;
         _attackingDEFCorrection = attackingDEFCorrection;
         _defendingATKCorrection = defendingATKCorrection;
         _defendingDEFCorrection = defendingDEFCorrection;
+    }
+    public List<int> GetCorrectionList()
+    {
+        List<int> returnList = new List<int>();
+        returnList.Add(AttackingATKCorrection);
+        returnList.Add(AttackingDEFCorrection);
+        returnList.Add(DefendingATKCorrection);
+        returnList.Add(DefendingDEFCorrection);
+        return returnList;
     }
 }

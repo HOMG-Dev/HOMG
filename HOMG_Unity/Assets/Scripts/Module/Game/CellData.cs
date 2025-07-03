@@ -6,57 +6,29 @@ using UnityEngine;
 [System.Serializable]
 public class Unit
 {
-    private string _unitType;
+    private UnitData _data;
+    private string _name;
 
     public UnitData GetData()
     {
-        return UnitManager.GetUnitData(_unitType);
+        return _data;
+    }
+
+    public string GetName()
+    {
+        return _name;
     }
 
     public UnitData UnitData => GetData();
     public string Type => GetData().Type;
+    public string Name => GetName();
     public int ATK => GetData().ATK;
     public int DEF => GetData().DEF;
 
     public Unit(string unitType)
     {
-        _unitType = unitType;
+        _data = GameApp.ControllerManager.GetController(ControllerType.Game).GetModel<MapModel>().mapData.unitManager.GetUnitData(unitType);
     }
-    
-}
-
-[System.Serializable]
-public class Landform
-{
-    private string _landformType;
-
-    public LandformData GetData()
-    {
-        return LandformManager.GetLandformData(_landformType);
-    }
-
-    public List<int> GetCorrectionList()
-    {
-        List<int> returnList = new List<int>();
-        returnList.Add(AttackingATKCorrection);
-        returnList.Add(AttackingDEFCorrection);
-        returnList.Add(DefendingATKCorrection);
-        returnList.Add(DefendingDEFCorrection);
-        return returnList;
-    }
-
-    public LandformData LandformData => GetData();
-    public string Type => GetData().Type;
-    public int AttackingATKCorrection => GetData().AttackingATKCorrection;
-    public int AttackingDEFCorrection => GetData().AttackingDEFCorrection;
-    public int DefendingATKCorrection => GetData().DefendingATKCorrection;
-    public int DefendingDEFCorrection => GetData().DefendingDEFCorrection;
-
-    public Landform(string landformType)
-    {
-        _landformType = landformType;
-    }
-
 }
 
 [System.Serializable]
@@ -65,14 +37,22 @@ public class CellData
     private CellPos _cellPos;
     private List<SpecialType> _specialTypeList;
     private Landform _landform;
-    private List<Unit> _unitList;
+    private List<UnitData> _units;
+
+    private MapModel _mapModel;
+
+    public void UpdateMapModel()
+    {
+        _mapModel = GameApp.ControllerManager.GetController(ControllerType.Game).GetModel<MapModel>();
+    }
 
     public void Init(CellPos cellPos, string landformType)
     {
         _cellPos = cellPos;
         _specialTypeList = new List<SpecialType>();
-        _landform = new Landform(landformType);
-        _unitList = new List<Unit>();
+        UpdateMapModel();
+        _landform = _mapModel.mapData.landformManager.GetLandformData(landformType);
+        _units = new List<UnitData>();
     }
 
     public CellData(CellPos cellPos, string landformType)
