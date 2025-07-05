@@ -51,7 +51,7 @@ public class CellData
         _cellPos = cellPos;
         _specialTypeList = new List<SpecialType>();
         UpdateMapModel();
-        _landform = _mapModel.mapData.landformManager.GetLandformData(landformType);
+        _landform = _mapModel.mapData.landformManager.GetLandform(landformType);
         _units = new List<Unit>();
     }
 

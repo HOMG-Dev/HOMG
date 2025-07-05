@@ -34,7 +34,7 @@ public class LoadingController : BaseController
         // test save
         MapData mapData = new MapData(5, 5);
         mapData.MapName = "AKIOI";
-        mapData.Landform.Add(new CellPos(0, 0), mapData.landformManager.GetLandformData("Mountain"));
+        mapData.Landform.Add(new CellPos(0, 0), mapData.landformManager.GetLandform("Mountain"));
         Debug.Log(mapData.Landform[new CellPos(0, 0)].Type);
         Saver.Save(mapData, "/testmap.map");
         Debug.Log(Application.persistentDataPath + "/testmap.map");

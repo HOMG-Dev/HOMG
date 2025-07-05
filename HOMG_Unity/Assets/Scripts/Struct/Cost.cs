@@ -8,7 +8,7 @@ public class Cost
     public readonly int civilianFactory;
     public readonly int militaryFactory;
 
-    Cost(int civilianFactory, int militaryFactory)
+    public Cost(int civilianFactory, int militaryFactory)
     {
         this.civilianFactory = civilianFactory;
         this.militaryFactory = militaryFactory;
