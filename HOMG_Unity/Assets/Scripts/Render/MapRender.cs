@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class MapRender
 {
-    private MapModel mapModel;
+    private MapModel _mapModel;
 
     private CellPos _selectedCellPos;
 
+    private Dictionary<CellPos, Player> _playerDictionary;
     public MapRender(MapModel mapModel)
     {
-        this.mapModel = mapModel;
+        this._mapModel = mapModel;
     }
 
     public void ClickCell(CellPos cellPos)
@@ -21,7 +23,7 @@ public class MapRender
             // 如果点击的单元格已经被选中，则取消选中
             _selectedCellPos = null;
             Debug.Log("Cell deselected");
-            mapModel.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellLandformView);
+            _mapModel.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellLandformView);
             return;
         }
 
@@ -32,9 +34,9 @@ public class MapRender
         // args[1] 中分别存储 攻击时的进攻/防御修正 和 防御时的进攻/防御修正
 
         Landform landform = null;
-        if (mapModel.mapData.Landform.ContainsKey(cellPos))
+        if (_mapModel.mapData.Landform.ContainsKey(cellPos))
         {
-            landform = mapModel.mapData.Landform[cellPos];
+            landform = _mapModel.mapData.Landform[cellPos];
         }
         else
         {
@@ -46,6 +48,28 @@ public class MapRender
         args[0] = landform.Type;
         args[1] = landform.GetCorrectionList();
 
-        mapModel.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenCellLandformView, args);
+        _mapModel.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenCellLandformView, args);
+    }
+
+    public void HandleResult(Result result)
+    {
+        switch (result.Type)
+        {
+            case ResultType.Undefined:
+                Debug.LogError("HandleResult Error:Result的类型是Undefined!");
+                break;
+            case ResultType.UnitMove:
+                UnitMoveResult unitMoveResult = (UnitMoveResult)result;
+                _mapModel.cellData[unitMoveResult.OrignalCellPos].Units.Remove(unitMoveResult.Unit);
+                _mapModel.cellData[unitMoveResult.TargetCellPos].Units.Add(unitMoveResult.Unit);
+                break;
+            case ResultType.CellControllerChange:
+                CellOccupierChangeResult cellOccupierChangeResult = (CellOccupierChangeResult)result;
+                _playerDictionary[cellOccupierChangeResult.CellPos].occupiedCells.Remove(cellOccupierChangeResult.CellPos);
+                _playerDictionary[cellOccupierChangeResult.CellPos] = cellOccupierChangeResult.NewOccupier;
+                _playerDictionary[cellOccupierChangeResult.CellPos].occupiedCells.Add(cellOccupierChangeResult.CellPos);
+                break;
+        }
+
     }
 }

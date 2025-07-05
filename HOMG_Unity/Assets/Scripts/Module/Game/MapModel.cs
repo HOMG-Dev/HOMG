@@ -6,6 +6,8 @@ public class MapModel : BaseModel
 {
     public MapData mapData;
 
+    public List<Player> players;
+
     public Dictionary<CellPos, CellData> cellData;
 
     public MapModel(MapData mapData) : base()

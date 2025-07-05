@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -40,6 +41,8 @@ public class CellData
     private List<Unit> _units;
 
     private MapModel _mapModel;
+
+    public List<Unit> Units => _units;
 
     public void UpdateMapModel()
     {
