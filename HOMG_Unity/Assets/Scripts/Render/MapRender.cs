@@ -38,7 +38,7 @@ public class MapRender
         }
         else
         {
-            landform = GameApp.ControllerManager.GetController(ControllerType.Game).GetModel<MapModel>().mapData.landformManager.GetLandformData("Plain");
+            landform = GameApp.ControllerManager.GetController(ControllerType.Game).GetModel<MapModel>().mapData.landformManager.GetLandform("Plain");
         }
         Debug.Log($"Landform at cell ({cellPos.x}, {cellPos.y}): {landform.Type}");
         // 触发打开地形视图的事件

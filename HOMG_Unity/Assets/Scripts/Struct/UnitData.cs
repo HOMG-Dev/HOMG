@@ -8,6 +8,8 @@ public class UnitData
     private string _unitType;
     private int _atk;
     private int _def;
+    private Cost _ATKCost;
+    private Cost _maintenanceCost;
 
     public string GetUnitType()
     {
@@ -24,9 +26,30 @@ public class UnitData
         return _def;
     }
 
+    public Cost GetATKCost()
+    {
+        if (_ATKCost == null)
+        {
+            _ATKCost = new Cost(0, 0);
+        }
+        return _ATKCost;
+    }
+
+    public Cost GetMaintenanceCost()
+    {
+        if (_maintenanceCost == null)
+        {
+            _maintenanceCost = new Cost(0, 0);
+        }
+        return _maintenanceCost;
+    }
+
+
     public string Type => GetUnitType();
     public int ATK => GetATK();
     public int DEF => GetDEF();
+    public Cost ATKCost => GetATKCost();
+    public Cost MaintenanceCost => GetMaintenanceCost();
 
     public UnitData(string unitType, int atk, int def)
     {
