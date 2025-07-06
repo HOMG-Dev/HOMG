@@ -55,23 +55,8 @@ public class MapView : BaseView
         arrowContainer.transform.SetParent(GameObject.Find("MapMagic").transform);
         _arrowParent = arrowContainer.transform;
 
-        GameApp.ControllerManager.GetController(ControllerType.Game).RegisterFunc(EventDefine.CreateArrow, CreateArrow);
-        GameApp.ControllerManager.GetController(ControllerType.Game).RegisterFunc(EventDefine.DeleteArrow, DeleteArrow);
-
-        // Test
-        CellPos startPos = new CellPos(0, 0);
-        CellPos endPos = new CellPos(1, 1);
-        TupleCellPos testArrow = new TupleCellPos(startPos, endPos);
-        System.Object[] args = new object[1];
-        args[0] = testArrow;
-        CreateArrow(args);
-
-        CellPos startPos2 = new CellPos(0, 0);
-        CellPos endPos2 = new CellPos(2, 2);
-        TupleCellPos testArrow2 = new TupleCellPos(startPos2, endPos2);
-        System.Object[] args2 = new object[1];
-        args2[0] = testArrow2;
-        CreateArrow(args2);
+        this.Controller.RegisterFunc(EventDefine.CreateArrow, CreateArrow);
+        this.Controller.RegisterFunc(EventDefine.DeleteArrow, DeleteArrow);
     }
 
     private void CreateCells()
@@ -332,12 +317,10 @@ public class MapView : BaseView
             arrowCoordinate = args[0] as TupleCellPos;
         }
 
-        if(_arrows.TryGetValue(arrowCoordinate, out GameObject arrow))
+        if(ArrowExist(arrowCoordinate))
         {
-            if (arrow != null)
-            {
-                DestroyImmediate(arrow);
-            }
+            DestroyImmediate(_arrows[arrowCoordinate]);
+
             _arrows.Remove(arrowCoordinate);
 
             // 清理动画延迟信息
@@ -376,7 +359,7 @@ public class MapView : BaseView
 
     private GameObject CreateArrowGameObject(Vector3 fromPos, Vector3 toPos, TupleCellPos arrowKey)
     {
-        GameObject arrowContainer = new GameObject($"Arrow_{fromPos}_{toPos}");
+        GameObject arrowContainer = new GameObject($"Arrow_from_cell({arrowKey.st.x}_{arrowKey.st.y})_to_cell({arrowKey.ed.x}_{arrowKey.ed.y})");
         arrowContainer.transform.SetParent(_arrowParent);
 
         Vector3 direction = (toPos - fromPos).normalized;
