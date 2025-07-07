@@ -58,6 +58,10 @@ public class MapRender
             unitArgs[1] = mapModel.cellData[cellPos]._units;
             this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenCellUnitView, unitArgs);
         }
+        else
+        {
+            this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellUnitView);
+        }
     }
 
 }
