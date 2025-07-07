@@ -32,4 +32,10 @@ public class CellPos
     {
         return x.GetHashCode() ^ y.GetHashCode();
     }
+
+    // 重写 ToString 方法，方便调试输出
+    public override string ToString()
+    {
+        return $"{this.x}_{this.y}";
+    }
 }

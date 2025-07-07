@@ -10,9 +10,9 @@ using UnityEngine.UI;
 /// </summary>
 public class MapView : BaseView
 {
-    private List<CellBehavior> _highlightingCells;//正在高亮的cell
-    private List<CellBehavior> _targetCells;//准备要高亮的cell
-    private List<CellBehavior> _selectedCells;//选中的cell
+    private CellBehavior _highlightingCell;//高亮中的cell
+    private CellBehavior _selectedCell;//被选中的cell
+    private CellBehavior _targetCell;//鼠标指着的cell
 
     // 箭头
     private Dictionary<TupleCellPos, GameObject> _arrows; // 存储箭头，key为箭头ID
@@ -43,9 +43,7 @@ public class MapView : BaseView
     public override void InitData()
     {
         base.InitData();
-        _highlightingCells = new List<CellBehavior>();
-        _targetCells = new List<CellBehavior>();
-        _selectedCells = new List<CellBehavior>();
+
         _arrows = new Dictionary<TupleCellPos, GameObject>();
         _arrowAnimationDelays = new Dictionary<TupleCellPos, List<float>>();
         CreateCells();
@@ -212,8 +210,6 @@ public class MapView : BaseView
         // 将视口点映射到 Map Camera 的射线
         Ray ray = mapCamera.ViewportPointToRay(viewportPoint);
 
-        _targetCells.Clear();
-
         Debug.DrawRay(ray.origin, ray.direction * 400, Color.red);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
@@ -221,7 +217,7 @@ public class MapView : BaseView
             CellBehavior cell = hit.transform.GetComponent<CellBehavior>();
             if (cell != null)
             {
-                _targetCells.Add(cell);
+                _targetCell = cell;
                 OnClick(cell);
             }
         }
@@ -230,45 +226,45 @@ public class MapView : BaseView
 
     private void HighlightCells()
     {
-        foreach (var cell in _highlightingCells)
+        if (_targetCell == _selectedCell || _targetCell == _highlightingCell || _targetCell == null)
+            return;
+
+        if (_highlightingCell == _selectedCell)
         {
-            if (_selectedCells.Contains(cell) == false)
+            _highlightingCell = null;
+        }
+        else
+        {
+            if(_highlightingCell != null)
             {
-                cell.Lowlight();
+                _highlightingCell.Lowlight();
             }
         }
-        foreach (var cell in _targetCells)
-        {
-            if (_selectedCells.Contains(cell) == false)
-            {
-                cell.Highlight();
-                _highlightingCells.Add(cell);
-            }
-        }
+        _targetCell.Highlight();
+        _highlightingCell = _targetCell;
     }
+
 
     private void OnClick(CellBehavior myCell)
     {
         if (Input.GetMouseButtonDown(0))
         {
             ApplyFunc(EventDefine.ClickCell, myCell);
-            if (_selectedCells.Contains(myCell) == true)
+
+            if(_selectedCell == myCell)
             {
                 myCell.Lowlight();
-                _selectedCells.Remove(myCell);
+                _selectedCell = null;
             }
             else
             {
                 myCell.OnMouseDown();
-                if(_selectedCells.Count > 0)
+                if(_selectedCell != null)
                 {
-                    foreach (var cell in _selectedCells)
-                    {
-                        cell.Lowlight();
-                    }
-                    _selectedCells.Clear();
+                    _selectedCell.Lowlight();
+                    _selectedCell = null;
                 }
-                _selectedCells.Add(myCell);
+                _selectedCell = myCell;
             }
         }
     }
@@ -359,7 +355,7 @@ public class MapView : BaseView
 
     private GameObject CreateArrowGameObject(Vector3 fromPos, Vector3 toPos, TupleCellPos arrowKey)
     {
-        GameObject arrowContainer = new GameObject($"Arrow_from_cell({arrowKey.st.x}_{arrowKey.st.y})_to_cell({arrowKey.ed.x}_{arrowKey.ed.y})");
+        GameObject arrowContainer = new GameObject($"Arrow_from_cell({arrowKey.st})_to_cell({arrowKey.ed})");
         arrowContainer.transform.SetParent(_arrowParent);
 
         Vector3 direction = (toPos - fromPos).normalized;

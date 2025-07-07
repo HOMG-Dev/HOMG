@@ -29,22 +29,38 @@ public class CellUnitView : BaseView
 
     //接口相关
     private List<float> _coordinate = new List<float>();
-    private List<UnitInCellUnitView> _unitList = new List<UnitInCellUnitView>();
+    private List<Unit> _unitList = new List<Unit>();
 
     public override void Open(params object[] args)
     {
-        base.Open(args);
-
         if(args.Length < 2)
         {
-            Debug.LogError("CellUnitView Open method requires at least 3 arguments.");
+            Debug.LogWarning("CellUnitView需要至少两个参数");
             return;
         }
-        _coordinate = args[0] as List<float>;
 
-        _unitList = args[1] as List<UnitInCellUnitView>;
+        if(args[0] == null)
+        {
+            Debug.LogWarning("CellUnitView的坐标不能为空");
+            _coordinate.Add(2550f);
+            _coordinate.Add(1190f);
+        }
+        else
+        {
+            _coordinate = args[0] as List<float>;
+        }
+
+        _unitList = args[1] as List<Unit>;
 
         UpdatePosition();
+        CreateButtons();
+    }
+
+    public override void Close(params object[] args)
+    {
+        base.Close();
+
+        ClearAllButtons();
     }
 
     public override void InitData()
@@ -90,7 +106,7 @@ public class CellUnitView : BaseView
         {
             buttonTextComponent.text = buttonText;
         }
-
+        Debug.Log(buttonText);
         newButton.name = unitID;
 
         // 添加点击事件
@@ -110,7 +126,7 @@ public class CellUnitView : BaseView
     {
         foreach (var unit in _unitList)
         {
-            CreateButton(unit.name, unit.id);
+            CreateButton(unit.Type, "1");
         }
     }
 
