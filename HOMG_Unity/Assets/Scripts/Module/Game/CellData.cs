@@ -37,7 +37,8 @@ public class CellData
     private CellPos _cellPos;
     private List<SpecialType> _specialTypeList;
     private Landform _landform;
-    private List<Unit> _units;
+    //private List<Unit> _units;
+    public List<Unit> _units;
 
     private MapModel _mapModel;
 

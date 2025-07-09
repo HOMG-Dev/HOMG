@@ -35,6 +35,8 @@ public class LoadingController : BaseController
         MapData mapData = new MapData(5, 5);
         mapData.MapName = "AKIOI";
         mapData.Landform.Add(new CellPos(0, 0), mapData.landformManager.GetLandform("Mountain"));
+        mapData.unitManager.Register("帝国风暴兵", new UnitData("帝国风暴兵", 5, 5));
+
         Debug.Log(mapData.Landform[new CellPos(0, 0)].Type);
         Saver.Save(mapData, "/testmap.map");
         Debug.Log(Application.persistentDataPath + "/testmap.map");
@@ -44,7 +46,12 @@ public class LoadingController : BaseController
         MapModel mapModel = GetControllerModel(ControllerType.Game) as MapModel;
 
         mapModel = new MapModel(loadedMapData);
+
         GameApp.ControllerManager.GetController(ControllerType.Game).SetModel(mapModel);
+
+        mapModel.cellData[new CellPos(0, 0)] = new CellData(new CellPos(0, 0), "Mountain");
+        mapModel.cellData[new CellPos(0, 0)]._units.Add(new Unit("帝国风暴兵"));
+
 
         MapData testMapData = GameApp.ControllerManager.GetModel<MapModel>(ControllerType.Game).mapData;
         Debug.Log("---------------------------------------");

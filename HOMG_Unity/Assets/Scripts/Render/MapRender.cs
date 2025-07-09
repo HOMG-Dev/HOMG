@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MapRender
 {
+    private BaseController controller = GameApp.ControllerManager.GetController(ControllerType.Game);
     private MapModel mapModel;
 
     private CellPos _selectedCellPos;
@@ -21,7 +22,8 @@ public class MapRender
             // 如果点击的单元格已经被选中，则取消选中
             _selectedCellPos = null;
             Debug.Log("Cell deselected");
-            mapModel.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellLandformView);
+            this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellLandformView);
+            this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellUnitView);
             return;
         }
 
@@ -40,12 +42,26 @@ public class MapRender
         {
             landform = GameApp.ControllerManager.GetController(ControllerType.Game).GetModel<MapModel>().mapData.landformManager.GetLandform("Plain");
         }
-        Debug.Log($"Landform at cell ({cellPos.x}, {cellPos.y}): {landform.Type}");
-        // 触发打开地形视图的事件
-        object[] args = new object[2];
-        args[0] = landform.Type;
-        args[1] = landform.GetCorrectionList();
+        Debug.Log($"Landform at cell ({cellPos}): {landform.Type}");
 
-        mapModel.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenCellLandformView, args);
+        // 触发打开地形视图的事件
+        object[] landformArgs = new object[2];
+        landformArgs[0] = landform.Type;
+        landformArgs[1] = landform.GetCorrectionList();
+
+        this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenCellLandformView, landformArgs);
+
+        // 出发打开单位视图的事件
+        object[] unitArgs = new object[2];
+        if(mapModel.cellData.ContainsKey(cellPos) && mapModel.cellData[cellPos]._units.Count > 0)
+        {
+            unitArgs[1] = mapModel.cellData[cellPos]._units;
+            this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenCellUnitView, unitArgs);
+        }
+        else
+        {
+            this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellUnitView);
+        }
     }
+
 }
