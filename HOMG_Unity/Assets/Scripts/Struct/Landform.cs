@@ -10,6 +10,12 @@ public class Landform
     private int _attackingDEFCorrection;
     private int _defendingATKCorrection;
     private int _defendingDEFCorrection;
+    private string _modelPath;
+
+    public string GetModelPath()
+    {
+        return _modelPath;
+    }
 
     public string GetLandformType()
     {
