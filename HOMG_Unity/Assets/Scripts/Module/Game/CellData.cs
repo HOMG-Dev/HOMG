@@ -47,6 +47,10 @@ public class CellData
         _mapModel = GameApp.ControllerManager.GetController(ControllerType.Game).GetModel<MapModel>();
     }
 
+    public List<Unit> GetUnits() => _units;
+
+    public CellPos GetCellPos() => _cellPos;
+
     public void Init(CellPos cellPos, string landformType)
     {
         _cellPos = cellPos;
@@ -66,5 +70,10 @@ public class CellData
     {
         _cellPos = new CellPos(x, y);
         Init(new CellPos(x, y), landformType);
+    }
+
+    public CellData(CellPos cellPos)
+    {
+        _cellPos = cellPos;
     }
 }
