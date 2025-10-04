@@ -41,4 +41,7 @@ public static class EventDefine
 
     public static readonly string UpdateCorrection = "UpdateCorrection";
     public static readonly string UpdateIntroduction = "UpdateIntroduction";
+
+    public static readonly string CreateArrow = "CreateArrow";
+    public static readonly string DeleteArrow = "DeleteArrow";
 }
