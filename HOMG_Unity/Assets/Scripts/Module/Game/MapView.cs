@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// 测试的地图视图
@@ -199,8 +200,29 @@ public class MapView : BaseView
         }
     }
 
+    private bool IsPointerOverUI(int minHits = 2)
+    {
+        if (EventSystem.current == null) return false;
+
+        var data = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(data, results);
+
+        int count = 0;
+        for (int i = 0; i < results.Count; i++)
+        {
+            var go = results[i].gameObject;
+
+            count++;
+            if (count >= minHits) return true;
+        }
+        return false;
+    }
+
     private void MouseDetect()
     {
+        if (IsPointerOverUI()) return;
+
         Camera mainCamera = Camera.main;
         Camera mapCamera = GameObject.Find("Map Camera").GetComponent<Camera>();
 

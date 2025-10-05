@@ -134,10 +134,11 @@ public class MapRender
                 unitGO.name = unit.Name;
 
                 // 简单错位
-                var offset = new Vector3((i % 2) * 0.4f, 0f, (i / 2) * 0.4f);
+                float div = 10.0f;
+                var offset = new Vector3((i % 2) * div, 0f, (i / 2) * div);
                 unitGO.transform.localPosition = offset;
                 unitGO.transform.localRotation = Quaternion.identity;
-                unitGO.transform.localScale = new Vector3(10, 10, 10);
+                unitGO.transform.localScale = new Vector3(5, 5, 5);
             }
         }
     }

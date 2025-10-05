@@ -33,13 +33,13 @@ public class CellUnitView : BaseView
 
     public override void Open(params object[] args)
     {
-        if(args.Length < 2)
+        if (args.Length < 2)
         {
             Debug.LogWarning("CellUnitView需要至少两个参数");
             return;
         }
 
-        if(args[0] == null)
+        if (args[0] == null)
         {
             Debug.LogWarning("CellUnitView的坐标不能为空");
             _coordinate.Add(2550f);
@@ -91,35 +91,34 @@ public class CellUnitView : BaseView
     // 创建按钮
     public void CreateButton(string buttonText, string unitID)
     {
-        GameObject newButton;
-
         if (buttonPrefab == null)
         {
-            Debug.Log("按钮预制体未找到");
+            Debug.LogError("按钮预制体未找到");
+            return;
         }
 
-        newButton = Instantiate(buttonPrefab, _scrollContent);
+        var buttonInstance = Instantiate(buttonPrefab, _scrollContent);
+        buttonInstance.name = unitID;
 
-        // 设置按钮文本
-        Text buttonTextComponent = newButton.GetComponentInChildren<Text>();
-        if (buttonTextComponent != null)
+        // 让父容器控制宽度，用 preferredHeight 控制高度
+        var layout = buttonInstance.GetComponent<LayoutElement>() ?? buttonInstance.AddComponent<LayoutElement>();
+        layout.preferredHeight = buttonHeight;
+        layout.flexibleWidth   = 1; // 横向占满
+        layout.flexibleHeight  = 0;
+
+        // 设置文字
+        var txt = buttonInstance.GetComponentInChildren<Text>(true);
+        if (txt != null)
         {
-            buttonTextComponent.text = buttonText;
-        }
-        Debug.Log(buttonText);
-        newButton.name = unitID;
-
-        // 添加点击事件
-        Button buttonComponent = newButton.GetComponent<Button>();
-        if (buttonComponent != null)
-        {
-            buttonComponent.onClick.AddListener(() => OnButtonClick(buttonComponent));
+            txt.text = buttonText;
+            txt.alignment = TextAnchor.MiddleCenter;
         }
 
-        // 设置按钮大小
-        RectTransform rectTransform = newButton.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, buttonHeight);
+        var btn = buttonInstance.GetComponent<Button>();
+        if (btn != null)
+            btn.onClick.AddListener(() => OnButtonClick(btn));
     }
+
 
     // 批量创建按钮
     public void CreateButtons()
@@ -146,7 +145,7 @@ public class CellUnitView : BaseView
         // ApplyControllerFunc(ControllerType.Game, EventDefine);
 
         // 高亮按钮
-        if(_sellectedButtons.Contains(button) == false)
+        if (_sellectedButtons.Contains(button) == false)
         {
             _sellectedButtons.Add(button);
         }
@@ -154,13 +153,14 @@ public class CellUnitView : BaseView
         {
             _sellectedButtons.Remove(button);
         }
+
         HighLightButton(button);
     }
 
     private void HighLightButton(Button button)
     {
         // 高亮按钮
-        if(_sellectedButtons.Contains(button) == true)
+        if (_sellectedButtons.Contains(button) == true)
         {
             button.GetComponent<Image>().color = Color.green; // 设置高亮颜色
         }

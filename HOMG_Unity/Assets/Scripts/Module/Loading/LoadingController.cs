@@ -51,7 +51,8 @@ public class LoadingController : BaseController
 
         mapModel.cellData[new CellPos(0, 0)] = new CellData(new CellPos(0, 0), "Mountain");
         mapModel.cellData[new CellPos(0, 0)]._units.Add(new Unit("帝国风暴兵"));
-
+        mapModel.cellData[new CellPos(0, 0)]._units.Add(new Unit("帝国风暴兵"));
+        mapModel.cellData[new CellPos(0, 0)]._units.Add(new Unit("帝国风暴兵"));
 
         MapData testMapData = GameApp.ControllerManager.GetModel<MapModel>(ControllerType.Game).mapData;
         Debug.Log("---------------------------------------");
