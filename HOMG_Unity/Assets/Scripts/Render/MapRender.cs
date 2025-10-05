@@ -8,8 +8,6 @@ public class MapRender
     private BaseController controller = GameApp.ControllerManager.GetController(ControllerType.Game);
     private MapModel mapModel;
 
-    private CellPos _selectedCellPos;
-
     public MapRender(MapModel mapModel)
     {
         this.mapModel = mapModel;
@@ -22,45 +20,24 @@ public class MapRender
         LoadAllCells();
     }
 
-    public void ClickCell(CellPos cellPos)
+    public void LeftClickCell(CellPos cellPos, bool isSelectedCellPos, object[] landformArgs, object[] unitArgs)
     {
-        if (cellPos.Equals(_selectedCellPos))
+        if (isSelectedCellPos)
         {
             // 如果点击的单元格已经被选中，则取消选中
-            _selectedCellPos = null;
             Debug.Log("Cell deselected");
             this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellLandformView);
             this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellUnitView);
             return;
         }
 
-        _selectedCellPos = cellPos;
         // 处理点击事件
-
-        Landform landform = null;
-        if (mapModel.mapData.Landform.ContainsKey(cellPos))
-        {
-            landform = mapModel.mapData.Landform[cellPos];
-        }
-        else
-        {
-            landform = GameApp.ControllerManager.GetController(ControllerType.Game).GetModel<MapModel>().mapData.landformManager.GetLandform("Plain");
-        }
-
-        Debug.Log($"Landform at cell ({cellPos}): {landform.Type}");
-
         // 触发打开地形视图的事件
-        object[] landformArgs = new object[2];
-        landformArgs[0] = landform.Type;
-        landformArgs[1] = landform.GetCorrectionList();
-
         this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenCellLandformView, landformArgs);
 
-        // 出发打开单位视图的事件
-        object[] unitArgs = new object[2];
-        if (mapModel.cellData.ContainsKey(cellPos) && mapModel.cellData[cellPos]._units.Count > 0)
+        // 触发打开单位视图的事件
+        if (unitArgs[1] != null)
         {
-            unitArgs[1] = mapModel.cellData[cellPos]._units;
             this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.OpenCellUnitView, unitArgs);
         }
         else

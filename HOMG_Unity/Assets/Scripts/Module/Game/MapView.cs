@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// 测试的地图视图
@@ -199,8 +200,34 @@ public class MapView : BaseView
         }
     }
 
+    private bool IsPointerOverUIWithMinHits(int minHits = 2)
+    {
+        if (EventSystem.current == null) return false;
+
+        var data = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(data, results);
+
+        // 可选：忽略特定“透传层/标签”的 UI（比如你的全屏覆盖层）
+        int count = 0;
+        for (int i = 0; i < results.Count; i++)
+        {
+            var go = results[i].gameObject;
+
+            // 如果给覆盖层设置了专用 Layer 或 Tag，这里直接跳过
+            // if (go.layer == LayerMask.NameToLayer("UI_PassThrough")) continue;
+            // if (go.CompareTag("UI_PassThrough")) continue;
+
+            count++;
+            if (count >= minHits) return true;
+        }
+        return false;
+    }
+
     private void MouseDetect()
     {
+        if (IsPointerOverUIWithMinHits(2)) return; // 至少命中两个 UI 才拦地图
+
         Camera mainCamera = Camera.main;
         Camera mapCamera = GameObject.Find("Map Camera").GetComponent<Camera>();
 
@@ -249,7 +276,7 @@ public class MapView : BaseView
     {
         if (Input.GetMouseButtonDown(0))
         {
-            ApplyFunc(EventDefine.ClickCell, myCell);
+            ApplyFunc(EventDefine.LeftClickCell, myCell);
 
             if(_selectedCell == myCell)
             {

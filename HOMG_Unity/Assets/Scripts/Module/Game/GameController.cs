@@ -8,10 +8,10 @@ using UnityEngine;
 public class GameController : BaseController
 {
     public MapRender mapRender;
+    private CellPos _selectedCellPos;
 
     public GameController() : base()
     {
-
         //注册事件
         InitModelEvent();
         InitGlobalEvent();
@@ -64,7 +64,7 @@ public class GameController : BaseController
         RegisterFunc(EventDefine.QuitGame, QuitGame);
 
         //Render事件
-        RegisterFunc(EventDefine.ClickCell, ClickCell);//点击地图格子事件
+        RegisterFunc(EventDefine.LeftClickCell, LeftClickCell);//点击地图格子事件
 
     }
 
@@ -108,16 +108,53 @@ public class GameController : BaseController
         ApplyControllerFunc(ControllerType.GameUI, EventDefine.QuitGame);
     }
 
-    private void ClickCell(System.Object[] args)
+    private void LeftClickCell(System.Object[] args)
     {
+        MapModel mapModel = GetModel<MapModel>();
+
         CellBehavior cell = args[0] as CellBehavior;
         if (cell == null)
         {
-            Debug.LogError("ClickCell: CellBehavior is null");
+            Debug.LogError("[GameController] LeftClickCell: CellBehavior is null");
             return;
         }
         CellPos cellPos = cell.cellPos;
-        mapRender.ClickCell(cellPos);
+
+        bool isSelectedCellPos = cellPos.Equals(_selectedCellPos);
+        Landform landform = null;
+        object[] unitArgs = new object[2];
+        object[] landformArgs = new object[2];
+
+        if (isSelectedCellPos)
+        {
+            // 如果点击的单元格已经被选中，则取消选中
+            _selectedCellPos = null;
+            mapRender.LeftClickCell(cellPos, isSelectedCellPos, landformArgs, unitArgs);
+            return;
+        }
+
+        _selectedCellPos = cellPos;
+
+        // 处理地形
+        if (mapModel.mapData.Landform.ContainsKey(cellPos))
+        {
+            landform = mapModel.mapData.Landform[cellPos];
+        }
+        else
+        {
+            landform = GameApp.ControllerManager.GetController(ControllerType.Game).GetModel<MapModel>().mapData.landformManager.GetLandform("Plain");
+        }
+        Debug.Log($"Landform at cell ({cellPos}): {landform.Type}");
+        landformArgs[0] = landform.Type;
+        landformArgs[1] = landform.GetCorrectionList();
+
+        // 触发打开单位视图的事件
+        if (mapModel.cellData.ContainsKey(cellPos) && mapModel.cellData[cellPos]._units.Count > 0)
+        {
+            unitArgs[1] = mapModel.cellData[cellPos]._units;
+        }
+
+        mapRender.LeftClickCell(cellPos, isSelectedCellPos, landformArgs, unitArgs);
     }
 
 }

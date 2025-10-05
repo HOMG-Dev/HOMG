@@ -37,7 +37,7 @@ public static class EventDefine
     public static readonly string OpenCellUnitView = "OpenCellUnitView";
     public static readonly string CloseCellUnitView = "CloseCellUnitView";
 
-    public static readonly string ClickCell = "ClickCell";
+    public static readonly string LeftClickCell = "LeftClickCell";
 
     public static readonly string UpdateCorrection = "UpdateCorrection";
     public static readonly string UpdateIntroduction = "UpdateIntroduction";
