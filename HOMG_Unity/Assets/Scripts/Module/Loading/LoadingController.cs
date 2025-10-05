@@ -35,7 +35,7 @@ public class LoadingController : BaseController
         MapData mapData = new MapData(5, 5);
         mapData.MapName = "AKIOI";
         mapData.Landform.Add(new CellPos(0, 0), mapData.landformManager.GetLandform("Mountain"));
-        mapData.unitManager.Register("帝国风暴兵", new UnitData("帝国风暴兵", 5, 5));
+        mapData.unitManager.Register("帝国风暴兵", new UnitData("帝国风暴兵", 5, 5, "Prefab/Soldiers/SoldierPrefab"));
 
         Debug.Log(mapData.Landform[new CellPos(0, 0)].Type);
         Saver.Save(mapData, "/testmap.map");

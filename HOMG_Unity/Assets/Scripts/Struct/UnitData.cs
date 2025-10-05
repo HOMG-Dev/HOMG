@@ -10,6 +10,12 @@ public class UnitData
     private int _def;
     private Cost _ATKCost;
     private Cost _maintenanceCost;
+    private string _modelPath;
+
+    public string GetModelPath()
+    {
+        return _modelPath;
+    }
 
     public string GetUnitType()
     {
@@ -51,11 +57,12 @@ public class UnitData
     public Cost ATKCost => GetATKCost();
     public Cost MaintenanceCost => GetMaintenanceCost();
 
-    public UnitData(string unitType, int atk, int def)
+    public UnitData(string unitType, int atk, int def, string modelPath)
     {
         _unitType = unitType;
         _atk = atk;
         _def = def;
+        _modelPath = modelPath;
     }
 }
 
