@@ -8,6 +8,10 @@ public class MapModel : BaseModel
 
     public Dictionary<CellPos, CellData> cellData;
 
+    public Dictionary<int, Player> Players = new Dictionary<int, Player>();
+
+    public int CurrentPlayerId = -1;
+
     public MapModel(MapData mapData) : base()
     {
         this.mapData = mapData;
