@@ -8,7 +8,7 @@ public class GameProcessor
 {
     public int _randomSeed = 114514;
 
-    private Dictionary<int, Player> _players = new Dictionary<int, Player>();// 保证player_id 从 0 -- n-1
+    private Dictionary<int, Player> _players;// 保证player_id 从 0 -- n-1
 
     private MapModel _map;
 
@@ -36,7 +36,7 @@ public class GameProcessor
 
     private void SyncGameData()
     {
-
+        _players = _map.Players;
     }
 
 
