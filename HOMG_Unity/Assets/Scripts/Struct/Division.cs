@@ -3,16 +3,22 @@ using System.Collections.Generic;
 
 public class Division
 {
-    private List<Unit> _units;
+    private Player _owner;
+    private List<FightingUnit> _units;
 
     public int ATK;
     public int DEF;
 
     public Cost ATKCost;
 
-    public Division(List<Unit> _units)
+    public Division(Player _owner, List<Unit> _units)
     {
-        this._units = _units;
+        this._owner = _owner;
+        this._units = new List<FightingUnit>();
+        foreach (Unit unit in _units)
+        {
+            this._units.Add(new FightingUnit(unit));
+        }
         CalcUnits();
     }
 
@@ -22,9 +28,9 @@ public class Division
         int def = 0;
         Cost _ATKCostcost = new Cost(0, 0);
 
-        foreach (Unit unit in _units)
+        foreach (FightingUnit unit in _units)
         {
-            _ATKCostcost += unit.UnitData.ATKCost;
+            _ATKCostcost += unit.unit.UnitData.ATKCost;
         }
 
         ATK = atk;
@@ -32,5 +38,9 @@ public class Division
 
         ATKCost = _ATKCostcost;
     }
+
+    public List<FightingUnit> GetFightingUnits() => _units;
+
+    public Player GetOwner() => _owner;
 
 }

@@ -1,7 +1,6 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-public class MoveOperation : IOperation
+public class FightOperation : IOperation
 {
     public int id { get; set; }
 
