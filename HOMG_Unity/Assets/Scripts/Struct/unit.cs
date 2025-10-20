@@ -20,8 +20,9 @@ public class Unit
     public int ATK => GetData().ATK;
     public int DEF => GetData().DEF;
 
-    public Unit(string unitType)
+    public Unit(string unitName, string unitType)
     {
+        _name = unitName;
         _data = GameApp.ControllerManager.GetController(ControllerType.Game).GetModel<MapModel>().mapData.unitManager.GetUnitData(unitType);
     }
 }
