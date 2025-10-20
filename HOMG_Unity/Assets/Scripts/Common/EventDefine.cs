@@ -38,6 +38,10 @@ public static class EventDefine
     public static readonly string CloseCellUnitView = "CloseCellUnitView";
 
     public static readonly string LeftClickCell = "LeftClickCell";
+    public static readonly string RightClickCell = "RightClickCell";
+
+    public static readonly string OnCellUnitButtonDown = "OnCellUnitButtonDown";
+    public static readonly string ClearSelectedUnitNames = "ClearSelectedUnitNames";
 
     public static readonly string UpdateCorrection = "UpdateCorrection";
     public static readonly string UpdateIntroduction = "UpdateIntroduction";

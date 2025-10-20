@@ -9,6 +9,7 @@ public class GameController : BaseController
 {
     public MapRender mapRender;
     private CellPos _selectedCellPos;
+    private List<string> _selectedUnitNames = new List<string>();
 
     public GameController() : base()
     {
@@ -65,6 +66,10 @@ public class GameController : BaseController
 
         //Render事件
         RegisterFunc(EventDefine.LeftClickCell, LeftClickCell);//点击地图格子事件
+        RegisterFunc(EventDefine.RightClickCell, RightClickCell);
+
+        RegisterFunc(EventDefine.OnCellUnitButtonDown, OnCellUnitButtonDown);
+        RegisterFunc(EventDefine.ClearSelectedUnitNames, ClearSelectedUnitNames);
 
     }
 
@@ -157,4 +162,28 @@ public class GameController : BaseController
         mapRender.LeftClickCell(cellPos, isSelectedCellPos, landformArgs, unitArgs);
     }
 
+    public void ClearSelectedUnitNames(System.Object[] args)
+    {
+        _selectedUnitNames = new List<string>();
+    }
+
+    private void OnCellUnitButtonDown(System.Object[] args)
+    {
+        string unitName = args[0] as string;
+        _selectedUnitNames.Add(unitName);
+        Debug.Log($"OnCellUnitButtonDown: {unitName}");
+    }
+
+    private void RightClickCell(System.Object[] args)
+    {
+        CellBehavior cell = args[0] as CellBehavior;
+        CellPos cellPos = cell.cellPos;
+
+        // to do: 传出接口写在这里
+        // to do: 状态机
+        if (_selectedUnitNames.Count > 0 && _selectedCellPos.Equals(cellPos) == false)
+        {
+            mapRender.RightClickCell(cellPos, _selectedCellPos);
+        }
+    }
 }

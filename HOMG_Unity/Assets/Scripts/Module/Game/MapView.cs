@@ -294,6 +294,15 @@ public class MapView : BaseView
                 _selectedCell = myCell;
             }
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            // 判断一下是不是selectedCell
+            if (_selectedCell != null)
+            {
+                ApplyFunc(EventDefine.RightClickCell, myCell);
+            }
+        }
     }
 
     // 在两个坐标之间创建箭头
@@ -314,6 +323,11 @@ public class MapView : BaseView
         if(ArrowExist(arrowCoordinate))
         {
             Debug.LogWarning("箭头已经存在，无法重复创建");
+            return;
+        }
+        if(arrowCoordinate.st.Equals(arrowCoordinate.ed))
+        {
+            Debug.LogWarning("起点和终点相同，无法创建箭头");
             return;
         }
 

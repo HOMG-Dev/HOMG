@@ -26,6 +26,7 @@ public class MapRender
         {
             // 如果点击的单元格已经被选中，则取消选中
             Debug.Log("Cell deselected");
+            this.controller.ApplyFunc( EventDefine.ClearSelectedUnitNames);
             this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellLandformView);
             this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellUnitView);
             return;
@@ -44,6 +45,16 @@ public class MapRender
         {
             this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellUnitView);
         }
+    }
+
+    public void RightClickCell(CellPos cellPos, CellPos selectedCellPos)
+    {
+        // 处理右键点击事件
+        Debug.Log("Right click on cell: " + cellPos);
+
+        // 创建新箭头
+        TupleCellPos key = new TupleCellPos(selectedCellPos, cellPos);
+        this.controller.ApplyFunc(EventDefine.CreateArrow, key);
     }
 
     public void LoadSingleCell(CellPos cellPos)

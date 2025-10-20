@@ -89,7 +89,7 @@ public class CellUnitView : BaseView
     }
 
     // 创建按钮
-    public void CreateButton(string buttonText, string unitID)
+    public void CreateButton(string buttonText, string unitName)
     {
         GameObject newButton;
 
@@ -107,7 +107,7 @@ public class CellUnitView : BaseView
             buttonTextComponent.text = buttonText;
         }
         Debug.Log(buttonText);
-        newButton.name = unitID;
+        newButton.name = unitName;
 
         // 添加点击事件
         Button buttonComponent = newButton.GetComponent<Button>();
@@ -126,7 +126,7 @@ public class CellUnitView : BaseView
     {
         foreach (var unit in _unitList)
         {
-            CreateButton(unit.Type, "1");
+            CreateButton(unit.Type, unit.Name);
         }
     }
 
@@ -141,13 +141,13 @@ public class CellUnitView : BaseView
 
     private void OnButtonClick(Button button)
     {
-        // 处理按钮点击事件（目前尚未实现）
+        // 处理按钮点击事件
         Debug.Log($"按钮 {button.name} 被点击");
-        // ApplyControllerFunc(ControllerType.Game, EventDefine);
 
         // 高亮按钮
         if(_sellectedButtons.Contains(button) == false)
         {
+            ApplyControllerFunc(ControllerType.Game, EventDefine.OnCellUnitButtonDown, button.name);
             _sellectedButtons.Add(button);
         }
         else
