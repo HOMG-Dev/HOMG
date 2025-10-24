@@ -9,6 +9,9 @@ public class GameController : BaseController
 {
     public MapRender mapRender;
     private CellPos _selectedCellPos;
+    private List<string> _selectedUnitNames = new List<string>();
+    private Dictionary<string, TupleCellPos> _movePath = new Dictionary<string, TupleCellPos>();
+    private Dictionary<TupleCellPos, int> _pathCount = new Dictionary<TupleCellPos, int>();
 
     public GameController() : base()
     {
@@ -25,6 +28,7 @@ public class GameController : BaseController
         GameApp.ViewManager.Register(ViewType.MapView, new ViewInfo()
         {
             PrefabName = "MapView",
+
             parentTf = GameApp.ViewManager.canvasTf,
             controller = this,
             sortintOrder = 1,
@@ -64,8 +68,12 @@ public class GameController : BaseController
         RegisterFunc(EventDefine.QuitGame, QuitGame);
 
         //Render事件
-        RegisterFunc(EventDefine.LeftClickCell, LeftClickCell);//点击地图格子事件
+        RegisterFunc(EventDefine.LeftClickCell, LeftClickCell); //点击地图格子事件
+        RegisterFunc(EventDefine.RightClickCell, RightClickCell);
 
+        RegisterFunc(EventDefine.OnCellUnitButtonDown, OnCellUnitButtonDown);
+        RegisterFunc(EventDefine.ClearSelectedUnitNames, ClearSelectedUnitNames);
+        RegisterFunc(EventDefine.OnCellUnitButtonUp, OnCellUnitButtonUp);
     }
 
     private void OpenMapView(System.Object[] args)
@@ -118,6 +126,7 @@ public class GameController : BaseController
             Debug.LogError("[GameController] LeftClickCell: CellBehavior is null");
             return;
         }
+
         CellPos cellPos = cell.cellPos;
 
         bool isSelectedCellPos = cellPos.Equals(_selectedCellPos);
@@ -142,8 +151,10 @@ public class GameController : BaseController
         }
         else
         {
-            landform = GameApp.ControllerManager.GetController(ControllerType.Game).GetModel<MapModel>().mapData.landformManager.GetLandform("Plain");
+            landform = GameApp.ControllerManager.GetController(ControllerType.Game).GetModel<MapModel>().mapData
+                .landformManager.GetLandform("Plain");
         }
+
         Debug.Log($"Landform at cell ({cellPos}): {landform.Type}");
         landformArgs[0] = landform.Type;
         landformArgs[1] = landform.GetCorrectionList();
@@ -157,4 +168,72 @@ public class GameController : BaseController
         mapRender.LeftClickCell(cellPos, isSelectedCellPos, landformArgs, unitArgs);
     }
 
+    public void ClearSelectedUnitNames(System.Object[] args)
+    {
+        _selectedUnitNames = new List<string>();
+    }
+
+    public void OnCellUnitButtonUp(System.Object[] args)
+    {
+        string unitName = args[0] as string;
+        _selectedUnitNames.Remove(unitName);
+    }
+
+    private void OnCellUnitButtonDown(System.Object[] args)
+    {
+        string unitName = args[0] as string;
+        _selectedUnitNames.Add(unitName);
+        Debug.Log($"OnCellUnitButtonDown: {unitName}");
+    }
+
+    private void RightClickCell(System.Object[] args)
+    {
+        CellBehavior cell = args[0] as CellBehavior;
+        CellPos cellPos = cell.cellPos;
+
+        // to do: 传出接口写在这里
+        // to do: 状态机
+        foreach (string unitname in _selectedUnitNames)
+        {
+            TupleCellPos path;
+
+            if (_movePath.ContainsKey(unitname))
+            {
+                path = _movePath[unitname];
+                _pathCount[path]--;
+                if (_pathCount[path] == 0)
+                {
+                    mapRender.RightClickCell(path.st, path.ed, true);
+                    _pathCount.Remove(path);
+                }
+
+                if (cellPos.Equals(_selectedCellPos))
+                {
+                    _movePath.Remove(unitname);
+                }
+                else
+                {
+                    _movePath[unitname] = new TupleCellPos(_selectedCellPos, cellPos);
+                }
+            }
+
+            if (cellPos.Equals(_selectedCellPos))
+            {
+                continue;
+            }
+
+            path = new TupleCellPos(_selectedCellPos, cellPos);
+            _movePath[unitname] = path;
+
+            if (_pathCount.ContainsKey(path))
+            {
+                _pathCount[path]++;
+            }
+            else
+            {
+                _pathCount[path] = 1;
+                mapRender.RightClickCell(_selectedCellPos, cellPos);
+            }
+        }
+    }
 }

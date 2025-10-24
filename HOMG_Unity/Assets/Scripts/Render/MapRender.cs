@@ -7,6 +7,7 @@ public class MapRender
 {
     private BaseController controller = GameApp.ControllerManager.GetController(ControllerType.Game);
     private MapModel mapModel;
+    private float dislocation = 10f;
 
     public MapRender(MapModel mapModel)
     {
@@ -44,6 +45,26 @@ public class MapRender
         {
             this.controller.ApplyControllerFunc(ControllerType.GameUI, EventDefine.CloseCellUnitView);
         }
+        this.controller.ApplyFunc( EventDefine.ClearSelectedUnitNames);
+    }
+
+    public void RightClickCell(CellPos st, CellPos ed, bool deleteMode = false)
+    {
+        // 处理右键点击事件
+        Debug.Log("Right click on cell: " + ed);
+
+        // 创建新箭头
+        TupleCellPos key = new TupleCellPos(st, ed);
+        if (deleteMode)
+        {
+            // 删除箭头
+            this.controller.ApplyFunc(EventDefine.DeleteArrow, key);
+        }
+        else
+        {
+            this.controller.ApplyFunc(EventDefine.CreateArrow, key);
+        }
+
     }
 
     public void LoadSingleCell(CellPos cellPos)
@@ -111,7 +132,7 @@ public class MapRender
                 unitGO.name = unit.Name;
 
                 // 简单错位
-                var offset = new Vector3((i % 2) * 0.4f, 0f, (i / 2) * 0.4f);
+                var offset = new Vector3((i % 2) * dislocation, 0f, (i / 2) * dislocation);
                 unitGO.transform.localPosition = offset;
                 unitGO.transform.localRotation = Quaternion.identity;
                 unitGO.transform.localScale = new Vector3(10, 10, 10);
