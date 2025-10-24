@@ -27,7 +27,11 @@ public class GameController : BaseController
         //测试地图视图
         GameApp.ViewManager.Register(ViewType.MapView, new ViewInfo()
         {
-            PrefabName = "MapView", parentTf = GameApp.ViewManager.canvasTf, controller = this, sortintOrder = 1,
+            PrefabName = "MapView",
+
+            parentTf = GameApp.ViewManager.canvasTf,
+            controller = this,
+            sortintOrder = 1,
         });
 
 
