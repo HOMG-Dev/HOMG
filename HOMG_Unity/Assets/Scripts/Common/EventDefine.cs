@@ -41,6 +41,7 @@ public static class EventDefine
     public static readonly string RightClickCell = "RightClickCell";
 
     public static readonly string OnCellUnitButtonDown = "OnCellUnitButtonDown";
+    public static readonly string OnCellUnitButtonUp = "OnCellUnitButtonUp";
     public static readonly string ClearSelectedUnitNames = "ClearSelectedUnitNames";
 
     public static readonly string UpdateCorrection = "UpdateCorrection";

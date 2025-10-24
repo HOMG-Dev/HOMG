@@ -305,6 +305,17 @@ public class MapView : BaseView
         }
     }
 
+    public bool IsNearby (CellPos st, CellPos ed)
+    {
+        if (st.x == ed.x && (Math.Abs(st.y - ed.y) == 1 || Math.Abs(st.y - ed.y) == 2))
+            return true;
+        if ((st.x) % 2 == 0 && Math.Abs(st.y - ed.y) == 1 && (ed.x - st.x) == 1)
+            return true;
+        if ((st.x) % 2 == 1 && Math.Abs(st.y - ed.y) == 1 && (ed.x - st.x) == -1)
+            return true;
+        return false;
+    }
+
     // 在两个坐标之间创建箭头
     public void CreateArrow(System.Object[] args)
     {
@@ -312,12 +323,18 @@ public class MapView : BaseView
 
         if(args.Length < 1 || args[0] == null)
         {
-            Debug.LogWarning("提供了不合法的箭头");
+            Debug.LogWarning("提供了不合法的箭头坐标");
             return;
         }
         else
         {
             arrowCoordinate = args[0] as TupleCellPos;
+        }
+
+        if (IsNearby(arrowCoordinate.st, arrowCoordinate.ed) == false)
+        {
+            Debug.LogWarning("仅支持创建相邻箭头");
+            return;
         }
 
         if(ArrowExist(arrowCoordinate))
@@ -353,7 +370,6 @@ public class MapView : BaseView
         {
             arrowCoordinate = args[0] as TupleCellPos;
         }
-
         if(ArrowExist(arrowCoordinate))
         {
             DestroyImmediate(_arrows[arrowCoordinate]);

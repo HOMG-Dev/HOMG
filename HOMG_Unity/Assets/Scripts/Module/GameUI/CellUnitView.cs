@@ -152,6 +152,7 @@ public class CellUnitView : BaseView
         }
         else
         {
+            ApplyControllerFunc(ControllerType.Game, EventDefine.OnCellUnitButtonUp, button.name);
             _sellectedButtons.Remove(button);
         }
         HighLightButton(button);
